@@ -6,13 +6,15 @@
 /*   By: dwillard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 17:17:43 by dwillard          #+#    #+#             */
-/*   Updated: 2022/05/29 19:46:43 by dwillard         ###   ########.fr       */
+/*   Updated: 2022/05/30 18:01:12 by dwillard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef INTEGRAL_CONSTANT_H
 # define INTEGRAL_CONSTANT_H
-
+/*
+ * class to check whether our value is of integral data type or not
+*/
 namespace ft
 {
 	template<class T, bool v>

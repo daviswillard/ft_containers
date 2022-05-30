@@ -1,33 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   integral_constant.h                                :+:      :+:    :+:   */
+/*   iterator_tag.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dwillard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/29 17:17:43 by dwillard          #+#    #+#             */
-/*   Updated: 2022/05/29 17:51:26 by dwillard         ###   ########.fr       */
+/*   Created: 2022/05/30 18:33:34 by dwillard          #+#    #+#             */
+/*   Updated: 2022/05/30 18:58:41 by dwillard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INTEGRAL_CONSTANT_H
-# define INTEGRAL_CONSTANT_H
+#ifndef ITERATOR_TAG_H
+# define ITERATOR_TAG_H
 
-namespace ft
-{
-	template<class T, bool v>
-	struct integral_constant {
-		static const bool value = v;
-
-	    typedef T					value_type;
-		typedef integral_constant	type;
-		operator value_type() const throw() {
-			return value;
-		}
-	};
-
-	template <class T>
-	struct is_integral:		public integral_constant<T, false> {};
-}
+struct input_iterator_tag  {};
+struct output_iterator_tag {};
+struct forward_iterator_tag       : public input_iterator_tag         {};
+struct bidirectional_iterator_tag : public forward_iterator_tag       {};
+struct random_access_iterator_tag : public bidirectional_iterator_tag {};
 
 #endif
