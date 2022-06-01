@@ -6,15 +6,15 @@
 /*   By: dwillard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 18:21:55 by dwillard          #+#    #+#             */
-/*   Updated: 2022/05/30 19:43:30 by dwillard         ###   ########.fr       */
+/*   Updated: 2022/06/01 19:17:19 by dwillard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ITERATOR_TRAITS_H
 # define ITERATOR_TRAITS_H
 
-# include <stddef.h>/*It is needed for ptrdiff_t*/
 # include "iterator_tag.h"
+# include <cstddef>
 
 namespace ft
 {
