@@ -25,21 +25,21 @@ namespace ft
 			return 0;
 		}
 
-/*
- * If compiler doesn't support partial template specialization, then:
- *
- * template <class C, class T, class D, class Pt, class Rt> inline
- *		T* Val_type(ft::iterator, T, D, Pt, Rt)
- *	{
- *		return 0;
- *	}
- *
- * template <class T> inline
- *		T* Val_type(const T*)
- *	{
- *		return 0;
- *	}
- */
+	/*
+	 * If compiler doesn't support partial template specialization, then:
+	 *
+	 * template <class C, class T, class D, class Pt, class Rt> inline
+	 *		T* Val_type(ft::iterator, T, D, Pt, Rt)
+	 *	{
+	 *		return 0;
+	 *	}
+	 *
+	 * template <class T> inline
+	 *		T* Val_type(const T*)
+	 *	{
+	 *		return 0;
+	 *	}
+	 */
 }
 
 #endif
