@@ -6,7 +6,7 @@
 /*   By: dwillard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 19:44:44 by dwillard          #+#    #+#             */
-/*   Updated: 2022/06/01 19:58:01 by dwillard         ###   ########.fr       */
+/*   Updated: 2022/06/03 18:29:07 by dwillard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,46 +28,65 @@ namespace ft
 	protected:
 		RanIt current;
 	public:
-		typedef RanIt				iterator_type;
+		typedef RanIt													iterator_type;
 		typedef typename ft::iterator_traits<RanIt>::difference_type	difference_type;
 		typedef typename ft::iterator_traits<RanIt>::reference			reference;
 		typedef typename ft::iterator_traits<RanIt>::pointer			pointer;
 
+		/*Default constructor, copy constructors*/
+
 		reverse_iterator() : current() {}
-		explicit reverse_iterator(RanIt __x) : current(__x) {}
-		//adapt it
-/*template <class _Up>
-			_LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX14
-			reverse_iterator(const reverse_iterator<_Up>& __u) : __t(__u.base()), current(__u.base()) {}
-			template <class _Up>
-			_LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX14
-			reverse_iterator& operator=(const reverse_iterator<_Up>& __u)
-			{ __t = current = __u.base(); return *this; }
-			_LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX14
-			_Iter base() const {return current;}
-			_LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX14
-			reference operator*() const {_Iter __tmp = current; return *--__tmp;}
-			_LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX14
-			pointer  operator->() const {return _VSTD::addressof(operator*());}
-			_LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX14
-			reverse_iterator& operator++() {--current; return *this;}
-			_LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX14
-			reverse_iterator  operator++(int) {reverse_iterator __tmp(*this); --current; return __tmp;}
-			_LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX14
-			reverse_iterator& operator--() {++current; return *this;}
-			_LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX14
-			reverse_iterator  operator--(int) {reverse_iterator __tmp(*this); ++current; return __tmp;}
-			_LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX14
-			reverse_iterator  operator+ (difference_type __n) const {return reverse_iterator(current - __n);}
-			_LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX14
-			reverse_iterator& operator+=(difference_type __n) {current -= __n; return *this;}
-			_LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX14
-			reverse_iterator  operator- (difference_type __n) const {return reverse_iterator(current + __n);}
-			_LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX14
-			reverse_iterator& operator-=(difference_type __n) {current += __n; return *this;}
-			_LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX14
-			reference         operator[](difference_type __n) const {return *(*this + __n);}
-*/
-		};
+		explicit reverse_iterator(RanIt _x) : current(_x) {}
+		template <class U>
+			reverse_iterator(const reverse_iterator<U>& _u) :
+				current(_u.base()) {}
+		template <class U>
+			reverse_iterator& operator=(const reverse_iterator<U>& _u)
+				{
+					current = _u.base();
+					return *this;
+				}
+		RanIt base() const
+		{
+			return current;
+		}
+
+		/*Operators*/
+
+		reference operator*() const { RanIt tmp = current; return *--tmp; }
+		pointer  operator->() const { return &**this; }
+		reverse_iterator& operator++() { --current; return *this; }
+		reverse_iterator  operator++(int) { reverse_iterator tmp(*this); --current; return tmp; }
+		reverse_iterator& operator--() { ++current; return *this; }
+		reverse_iterator  operator--(int) { reverse_iterator tmp(*this); ++current; return tmp; }
+		reverse_iterator  operator+ (difference_type n) const { return reverse_iterator(current - n); }
+		reverse_iterator& operator+=(difference_type n) { current -= n; return *this; }
+		reverse_iterator  operator- (difference_type n) const { return reverse_iterator(current + n); }
+		reverse_iterator& operator-=(difference_type n) { current += n; return *this; }
+		reference         operator[](difference_type __n) const { return *(*this + __n); }
+	};
+
+	template <class It1, class It2>
+		inline bool
+		operator==(const reverse_iterator<It1>& x, const reverse_iterator<It2>& y) { return x.base() == y.base(); }
+	template <class It1, class It2>
+		inline bool
+		operator<(const reverse_iterator<It1>& x, const reverse_iterator<It2>& y) { return x.base() > y.base(); }
+	template <class It1, class It2>
+		inline bool
+		operator>(const reverse_iterator<It1>& x, const reverse_iterator<It2>& y) { return x.base() < y.base(); }
+	template <class It1, class It2>
+		inline bool
+		operator!=(const reverse_iterator<It1>& x, const reverse_iterator<It2>& y) { return !(x.base() == y.base()); }
+	template <class It1, class It2>
+		inline bool
+		operator<=(const reverse_iterator<It1>& x, const reverse_iterator<It2>& y) { return x.base() >= y.base(); }
+	template <class It1, class It2>
+		inline bool
+		operator>=(const reverse_iterator<It1>& x, const reverse_iterator<It2>& y) { return x.base() <= y.base(); }
+	template <class It1, class It2>
+		inline typename reverse_iterator<It1>::difference_type
+		operator-(const reverse_iterator<It1> &x, const reverse_iterator<It2>& y) { return x.base() >= y.base(); }
 }
+
 #endif
