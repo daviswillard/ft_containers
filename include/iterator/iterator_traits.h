@@ -6,7 +6,7 @@
 /*   By: dwillard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 18:21:55 by dwillard          #+#    #+#             */
-/*   Updated: 2022/06/01 19:17:19 by dwillard         ###   ########.fr       */
+/*   Updated: 2022/06/04 17:56:08 by dwillard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ namespace ft
 		};
 
 	template <class T>
-		struct iterator_traits<T *> {
+		struct iterator_traits<T *>
+		{
 			typedef T							value_type;
 			typedef T*							pointer;
 			typedef T&							reference;

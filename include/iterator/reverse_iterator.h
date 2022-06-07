@@ -6,7 +6,7 @@
 /*   By: dwillard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 19:44:44 by dwillard          #+#    #+#             */
-/*   Updated: 2022/06/03 18:29:07 by dwillard         ###   ########.fr       */
+/*   Updated: 2022/06/04 17:58:31 by dwillard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ namespace ft
 
 		/*Operators*/
 
-		reference operator*() const { RanIt tmp = current; return *--tmp; }
-		pointer  operator->() const { return &**this; }
+		reference		  operator*() const { RanIt tmp = current; return *--tmp; }
+		pointer			  operator->() const { return &**this; }
 		reverse_iterator& operator++() { --current; return *this; }
 		reverse_iterator  operator++(int) { reverse_iterator tmp(*this); --current; return tmp; }
 		reverse_iterator& operator--() { ++current; return *this; }
@@ -63,7 +63,7 @@ namespace ft
 		reverse_iterator& operator+=(difference_type n) { current -= n; return *this; }
 		reverse_iterator  operator- (difference_type n) const { return reverse_iterator(current + n); }
 		reverse_iterator& operator-=(difference_type n) { current += n; return *this; }
-		reference         operator[](difference_type __n) const { return *(*this + __n); }
+		reference         operator[](difference_type n) const { return *(*this + n); }
 	};
 
 	template <class It1, class It2>

@@ -1,26 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   iterator.h                                         :+:      :+:    :+:   */
+/*   random_access_iterator.h                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dwillard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/30 18:20:14 by dwillard          #+#    #+#             */
-/*   Updated: 2022/06/07 19:17:37 by dwillard         ###   ########.fr       */
+/*   Created: 2022/06/07 18:39:09 by dwillard          #+#    #+#             */
+/*   Updated: 2022/06/07 18:39:40 by dwillard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ITERATOR_H
-# define ITERATOR_H
+#pragma once
 
-# include <cstddef>
-# include "base.h" //Here I describe template for base iterator class
-# include "iterator_tag.h"
-# include "iter_cat.h"
-# include "iterator_traits.h"
-# include "val_type.h"
-# include "adv_dist.h"
-# include "reverse_iterator.h"
-# include "insert_iterator.h"
-
-#endif
+#include "iterator.h"
