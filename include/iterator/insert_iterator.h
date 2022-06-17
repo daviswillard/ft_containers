@@ -30,10 +30,16 @@ namespace ft
 		typedef typename Cont::value_type	value_type;
 		insert_iterator(Cont& x, typename Cont::iterator it);
 		insert_iterator& operator=(typename Cont::const_reference val);
-		insert_iterator& operator*();
+		insert_iterator& operator*()
+		{
+			return *this;
+		}
 		insert_iterator& operator++();
 		insert_iterator& operator++(int);
 
-		insert_iterator<Cont>	inserter(Conta& c, typename Cont::iterator i) { return insert_iterator<Cont>(c, i) };
+		insert_iterator<Cont>	inserter(Cont& c, typename Cont::iterator i)
+		{
+			return insert_iterator<Cont>(c, i);
+		};
 	};
 }
