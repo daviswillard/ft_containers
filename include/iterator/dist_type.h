@@ -6,15 +6,13 @@
 /*   By: dwillard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 19:19:41 by dwillard          #+#    #+#             */
-/*   Updated: 2022/06/01 19:27:27 by dwillard         ###   ########.fr       */
+/*   Updated: 2022/06/17 15:10:13 by dwillard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#pragma once
 
-#ifndef DIST_TYPE_H
-# define DIST_TYPE_H
-
-# include "iterator.h"
+#include "iterator.h"
 
 namespace ft
 {
@@ -42,5 +40,3 @@ namespace ft
  *	}
  */
 }
-
-#endif

@@ -6,7 +6,7 @@
 /*   By: dwillard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 18:49:37 by dwillard          #+#    #+#             */
-/*   Updated: 2022/06/07 19:17:52 by dwillard         ###   ########.fr       */
+/*   Updated: 2022/06/17 14:53:02 by dwillard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,14 @@ namespace ft
 		typedef Cont 						container_type;
 		typedef typename Cont::reference	reference;
 		typedef typename Cont::value_type	value_type;
+
 		insert_iterator(Cont& x, typename Cont::iterator it);
-		insert_iterator& operator=(typename Cont::const_reference val);
+
+//operators
+		insert_iterator& operator=(typename Cont::const_reference val)
+		{
+			return *this;
+		}
 		insert_iterator& operator*()
 		{
 			return *this;
@@ -37,9 +43,6 @@ namespace ft
 		insert_iterator& operator++();
 		insert_iterator& operator++(int);
 
-		insert_iterator<Cont>	inserter(Cont& c, typename Cont::iterator i)
-		{
-			return insert_iterator<Cont>(c, i);
-		};
+
 	};
 }
