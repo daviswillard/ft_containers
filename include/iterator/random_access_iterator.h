@@ -6,7 +6,7 @@
 /*   By: dwillard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 18:39:09 by dwillard          #+#    #+#             */
-/*   Updated: 2022/06/17 15:36:01 by dwillard         ###   ########.fr       */
+/*   Updated: 2022/06/17 16:48:45 by dwillard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@
 
 namespace ft
 {
-	template	<class Type, class Dist, class Ptr, class Ref,
-				class Ptr_const, class Ref_const>
+	template	<	class Type, class Dist, class Ptr, class Ref,
+					class Ptr_const, class Ref_const>
 	class random_access_iterator :
-		public ft::iterator	<random_access_iterator_tag,
-							Type, Dist, Ptr, Ref>
+		public ft::iterator	<	ft::random_access_iterator_tag,
+								Type, Dist, Ptr, Ref>
 	{
 	protected:
 		Ptr	current;
 	public:
-		typedef	random_access_iterator<Type, Dist, Ptr, Ref,
+		typedef	random_access_iterator<	Type, Dist, Ptr, Ref,
 										Ptr_const, Ref_const>	RanIt;
 		random_access_iterator()
 		{
@@ -36,8 +36,8 @@ namespace ft
 
 		}
 		explicit random_access_iterator
-			(const random_access_iterator<Type, Dist, Ptr, Ref,
-										Ptr_const, Ref_const>& other):
+			(const random_access_iterator<	Type, Dist, Ptr, Ref,
+											Ptr_const, Ref_const>& other):
 			current(other.base)
 		{
 
@@ -46,6 +46,28 @@ namespace ft
 		~random_access_iterator()
 		{
 
+		}
+
+		inline Ptr base() const
+		{
+			return current;
+		}
+
+		inline random_access_iterator& operator=(const RanIt& ref)
+		{
+			if (this != ref)
+				this->current = ref->current;
+			return *this;
+		}
+
+		inline Ref	operator*()
+		{
+			return *current;
+		}
+
+		inline const Ref operator*() const
+		{
+			return *current;
 		}
 
 	};

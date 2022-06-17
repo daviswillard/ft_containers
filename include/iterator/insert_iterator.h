@@ -34,6 +34,8 @@ namespace ft
 //operators
 		insert_iterator& operator=(typename Cont::const_reference val)
 		{
+			if (val != this)
+				this = val;
 			return *this;
 		}
 		insert_iterator& operator*()
