@@ -23,7 +23,23 @@ namespace ft
 		typedef typename TreeTraits::allocator_type	allocator_type;
 		typedef typename TreeTraits::key_compare	key_compare;
 		typedef typename TreeTraits::value_type		value_type;
-		typedef typename allocator_type
+		typedef typename allocator_type::template
+					rebind<void>::other::pointer	Genptr;
+		struct			Node;
+		friend struct	Node;
+		struct	Node {
+			Genptr		Left;
+			Genptr		Right;
+			Genptr		Parent;
+			value_type	Value;
+			char		Color;
+			char		Isnil;
+		};
+		TreeNode(const key_compare& Parg, allocator_type Al):
+				TreeTraits(Parg), Alnod(Al)
+		{
+		}
+		typename allocator_type::template rebind<Node>::other	Alnod;
 	};
 
 }

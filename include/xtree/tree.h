@@ -11,3 +11,7 @@
 /* ************************************************************************** */
 
 #pragma once
+
+#include "Node.h"
+#include "TreePtr.h"
+#include "TreeVal.h"
