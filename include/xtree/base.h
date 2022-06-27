@@ -1,6 +1,7 @@
 #pragma once
 
 #include "TreeVal.h"
+//#include "titerator.h"
 #include "../iterator/iterator.h"
 
 namespace ft
@@ -78,6 +79,28 @@ namespace ft
 		typedef Tptr										pointer;
 		typedef Ctptr										const_pointer;
 		typedef Reft										reference;
+
+
+//		typedef	ft::titerator<TreeTraits>					iterator;
+//		friend class	titerator<TreeTraits>
+
+		class	iterator;
+		friend class	iterator;
+		class iterator : public iterator<bidirectional_iterator_tag, value_type,
+				Dift, Tptr, Reft>
+		{
+		protected:
+			Nodeptr	Ptr;
+		public:
+			typedef	iterator<ft::bidirectional_iterator_tag, value_type,
+					Dift, Tptr, Reft>						Mybase;
+			typedef typename Mybase::iterator_category		iterator_category;
+			typedef typename Mybase::value_type				value_type;
+			typedef typename Mybase::difference_type		difference_type;
+			typedef typename Mybase::pointer				pointer;
+			typedef typename Mybase::reference				reference;
+		};
+
 
 	};
 }
