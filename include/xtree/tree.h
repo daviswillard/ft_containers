@@ -12,6 +12,8 @@
 
 #pragma once
 
+#include "base.h"
 #include "Node.h"
 #include "TreePtr.h"
 #include "TreeVal.h"
+#include "TreeInit.h"

@@ -17,7 +17,7 @@ namespace ft
 {
 /*
  * class to pack two objects in one
- * it allows to compare two objects of identical types
+ * it allows comparing two objects of identical types
 */
 	template <class T1, class T2>
 		struct pair
