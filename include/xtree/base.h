@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   base.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dwillard <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/28 17:48:56 by dwillard          #+#    #+#             */
+/*   Updated: 2022/06/28 17:54:24 by dwillard         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #pragma once
 
 #include "TreeVal.h"
@@ -124,7 +136,7 @@ namespace ft
 		protected:
 			Nodeptr	current_;
 		public:
-			typedef	iterator<ft::bidirectional_iterator_tag, value_type,
+			typedef	ft::iterator<ft::bidirectional_iterator_tag, value_type,
 					Dift, Tptr, Reft>						Mybase;
 			typedef typename Mybase::iterator_category		iterator_category;
 			typedef typename Mybase::value_type				value_type;
@@ -216,7 +228,7 @@ namespace ft
 		protected:
 			Nodeptr	current_;
 		public:
-			typedef	iterator<ft::bidirectional_iterator_tag, value_type,
+			typedef	ft::iterator<ft::bidirectional_iterator_tag, value_type,
 					Dift, Ctptr, const_reference>			Mybase;
 			typedef typename Mybase::iterator_category		iterator_category;
 			typedef typename Mybase::value_type				value_type;
@@ -226,7 +238,7 @@ namespace ft
 
 			const_iterator() : current_(0) {}
 			explicit const_iterator(Nodeptr P) : current_(P) {}
-			const_iterator(const typename Tree<TreeTraits>::iterator& X): current_(X.Mynode()) {}
+			explicit const_iterator(const typename Tree<TreeTraits>::iterator& X): current_(X.Mynode()) {}
 
 			const_reference   operator*() const
 			{
@@ -279,7 +291,7 @@ namespace ft
 		typedef	pair<iterator, iterator>				Pairii;
 		typedef	pair<const_iterator, const_iterator>	Paircc;
 
-		explicit Tree(const key_compare& Parg, const allocator_type& Al): Mybase(Parg, All)
+		explicit Tree(const key_compare& Parg, const allocator_type& Al): Mybase(Parg, Al)
 		{
 			Init();
 		}
@@ -295,7 +307,7 @@ namespace ft
 		Tree(const Myt& X)
 			: Mybase(X.key_comp(), X.get_allocator())
 		{
-			init();
+			Init();
 			Copy(X);
 		}
 
@@ -314,8 +326,8 @@ namespace ft
 				erase(begin(), end());
 				comp = X.comp;
 				Copy(X);
-				return *this;
 			}
+			return *this;
 		}
 
 		iterator	begin()
@@ -404,7 +416,183 @@ namespace ft
 		}
 
 
-		iterator
+		iterator	erase(iterator P)
+		{
+			if (Isnil(P.Mynode()))
+				throw std::out_of_range("map/set<T> iterator");
+			Nodeptr X;
+			Nodeptr Xpar;
+			Nodeptr Y = (P++).Mynode();
+			Nodeptr	Z = Y;
+			if (Isnil(Left(Y)))
+				X = Right(Y);
+			else if (Isnil(Right(Y)))
+				X = Left(Y);
+			else
+				Y = Min(Right(Y)), X = Right(Y); /* comma operator basically does first statement, discards it
+				then calculates second statement and returns it's value
+https://www.quora.com/Why-was-the-comma-operator-introduced-in-C-and-C-I-am-yet-to-see-a-good-use-of-a-comma-operator */
+			if (Y == Z)
+			{
+				Xpar = Parent(Z);
+				if (!Isnil(X))
+					Parent(X) = Xpar;
+				if (Root() == Z)
+					Root() = X;
+				else if (Left(Xpar) == Z)
+					Left(Xpar) = X;
+				else
+					Right(Xpar) = X;
+				if (Lmost() != Z)
+					;
+				else if (Isnil(Right(Z)))
+					Lmost() = Xpar;
+				else
+					Lmost() = Min(X);
+				if (Rmost() != Z)
+					;
+				else if (Isnil(Left(Z)))
+					Rmost() = Xpar;
+				else
+					Rmost() = Max(X);
+			}
+			else
+			{
+				Parent((Left(Z))) = Y;
+				Left(Y) = Left(Z);
+				if (Y == Right(Z))
+					Xpar = Y;
+				else
+				{
+					Xpar = Parent(Y);
+					if (!Isnil(X))
+						Parent(X) = Xpar;
+					Left(Xpar) = X;
+					Right(Y) = Right(Z);
+					Parent(Right(Z)) = Y;
+				}
+				if (Root() == Z)
+					Root() = Y;
+				else if (Left(Parent(Z)) == Z)
+					Left(Parent(Z)) = Y;
+				else
+					Right(Parent(Z)) = Y;
+				Parent(Y) = Parent(Z);
+				std::swap(Color(Y), Color(Z));
+			}
+			if (Color(Z) == Black)
+			{
+				for (; X != Root() && Color(X) == Black; Xpar = Parent(X))
+				{
+					if (X == Left(Xpar))
+					{
+						Nodeptr W = Right(Xpar);
+						if (Color(W) == Red)
+						{
+							Color(W) = Black;
+							Color(Xpar) = Red;
+							Lrotate(Xpar);
+							W = Right(Xpar);
+						}
+						if (Isnil(W))
+							X = Xpar; // shouldn't happen
+						else if (Color(Left(W)) == Black && Color(Right(W)) == Black)
+						{
+							Color(W) = Red;
+							X = Xpar;
+						}
+						else
+						{
+							if (Color(Right(W)) == Black)
+							{
+								Color(Left(W)) = Black;
+								Color(W) = Red;
+								Rrotate(W);
+								W = Right(Xpar);
+							}
+							Color(W) = Color(Xpar);
+							Color(Xpar) = Black;
+							Color(Right(W)) = Black;
+							Lrotate(Xpar);
+							break;
+						}
+					}
+					else
+					{
+						Nodeptr W = Left(Xpar);
+						if (Color(W) == Red)
+						{
+							Color(W) = Black;
+							Color(Xpar) = Red;
+							Rrotate(Xpar);
+							W = Left(Xpar);
+						}
+						if (Isnil(W))
+							X = Xpar; //shouldn't happen
+						else if (Color(Right(W)) == Black && Color(Left(W)) == Black)
+						{
+							Color(W) = Red;
+							X = Xpar;
+						}
+						else
+						{
+							if (Color(Left(W)) == Black)
+							{
+								Color(Right(W)) == Black;
+								Color(W) = Red;
+								Lrotate(W);
+								W = Left(Xpar);
+							}
+							Color(W) = Color(Xpar);
+							Color(Xpar) = Black;
+							Color(Left(W)) = Black;
+							Rrotate(Xpar);
+							break;
+						}
+					}
+				}
+				Color(X) = Black;
+			}
+			Destval(&Value(Z));
+			Freenode(Z);
+			if (0 < Size)
+				--Size;
+			return P;
+		}
+		iterator erase(iterator F, iterator L)
+		{
+			if (size() == 0 || F != begin() || L != end())
+			{
+				while (F != L)
+					erase(F++);
+				return (F);
+			}
+			else
+			{
+				Erase(Root());
+				Root() = Head, Size = 0;
+				Lmost() = Head, Rmost() = Head;
+				return begin();
+			}
+		}
+		size_type	erase(const key_type& X)
+		{
+			Pairii P = equal_range(X);
+			size_type N = 0;
+			Distance(P.first, P.second, N);
+			erase(P.first, P.second);
+			return N;
+		}
+		void	erase(const key_type* F, const key_type* L)
+		{
+			while (F != L)
+				erase(*F++);
+		}
+
+		void	clear()
+		{
+			erase(begin, end());
+		}
 
 	protected:
 		size_type	Size;
