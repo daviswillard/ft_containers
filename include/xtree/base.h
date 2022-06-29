@@ -6,7 +6,7 @@
 /*   By: dwillard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 17:48:56 by dwillard          #+#    #+#             */
-/*   Updated: 2022/06/28 17:54:24 by dwillard         ###   ########.fr       */
+/*   Updated: 2022/06/29 16:10:57 by dwillard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ namespace ft
 		typedef typename allocator_type::template
 				rebind<value_type>::other::reference		Vref;
 
+		// all these functions return lvalue, so we can assign new value to function call expression
 		static Charref	Color(Nodeptr P)
 		{
 			return ((Charref)(*P).Color);
@@ -594,7 +595,343 @@ https://www.quora.com/Why-was-the-comma-operator-introduced-in-C-and-C-I-am-yet-
 			erase(begin, end());
 		}
 
+		iterator	find(const key_type& Kv)
+		{
+			iterator P = lower_bound(Kv);
+			return (p == end() || comp(Kv, Key(P.Mynode())) ? end() : P);
+		}
+
+		const_iterator	find(const key_type& Kv) const
+		{
+			const_iterator P = lower_bound(Kv);
+			return (p == end() || comp(Kv, Key(P.Mynode())) ? end() : P);
+		}
+
+		size_type	count(const key_type& Kv) const
+		{
+			Paircc Ans = equal_range(Kv);
+			size_type N = 0;
+			Distance(Ans.first, Ans.second, N);
+			return N;
+		}
+
+		iterator	lower_bound(const key_type& Kv)
+		{
+			return iterator(Lbound(Kv));
+		}
+
+		const_iterator	lower_bound(const key_type& Kv) const
+		{
+			return const_iterator(Lbound(Kv));
+		}
+
+		iterator	upper_bound(const key_type& Kv)
+		{
+			return iterator(Ubound(Kv));
+		}
+
+
+		const_iterator	upper_bound(const key_type& Kv) const
+		{
+			return const_iterator(Ubound(Kv));
+		}
+
+		Pairii	equal_range(const key_type& Kv)
+		{
+			return Pairii(lower_bound(Kv), upper_bound(Kv));
+		}
+
+		Paircc	equal_range(const key_type& Kv) const
+		{
+			return Paircc(lower_bound(Kv), upper_bound(Kv));
+		}
+
+		void	swap(Myt& X)
+		{
+			if (get_allocator() == X.get_allocator())
+			{
+				std::swap(comp, X.comp);
+				std::swap(Head, x.Head);
+				std::swap(Size, X.Size);
+			}
+			else
+			{
+				Myt Ts = *this;
+				*this = X, X = Ts;
+			}
+		}
+
 	protected:
 		size_type	Size;
+		Nodeptr		Head;
+
+		void	Copy(const Myt& X)
+		{
+			Root() = Copy(X.Root(), Head);
+			Size = X.size();
+			if (!Isnil(Root()))
+			{
+				Lmost() = Min(Root());
+				Rmost() = Max(Root());
+			}
+			else
+				Lmost() = Head, Rmost() = Head;
+		}
+
+		Nodeptr	Copy(Nodeptr X, Nodeptr P)
+		{
+			Nodeptr	R = Head;
+			if (!Isnil(X))
+			{
+				Nodeptr Y = Buynode(P, Color(X));
+				try {
+					Consval(&Value(Y), Value(X));
+				} catch (...) {
+					Freenode(Y);
+					Erase(R);
+					throw;
+				}
+				Left(Y) = Head, Right(Y) = Head;
+			}
+			return R;
+		}
+
+		void	Erase(Nodeptr X)
+		{
+			for (Nodeptr Y + X; !Isnil(Y); X = Y)
+			{
+				Erase(Right(Y));
+				Y = Left(Y);
+				Destval(&Value(X));
+				Freenode(X);
+			}
+		}
+
+		void	Init()
+		{
+			Head = Buynode(0, Black);
+			Isnil(Head) = true;
+			Root() = Head;
+			Lmost() = Head, Rmost() = Head;
+			Size = 0;
+		}
+
+		iterator	Insert(bool Addleft, Nodeptr Y,
+				const value_type& V)
+		{
+			if (max_size() - 1 <= Size)
+				throw std::length_error("map/set<T> too long");
+			Nodeptr Z = Buynode(Y, Red);
+			Left(Z) = Head, Rigth(Z) = Head;
+			try {
+				Consval(&Value(Z), V);
+			} catch (...) {
+				Freenode(Z);
+				throw;
+			}
+			++Size;
+			if (Y == Head)
+			{
+				Root() = Z;
+				Lmost() = Z, Rmost() = Z;
+			}
+			else if (Addleft)
+			{
+				Left(Y) = Z;
+				if (Y == Lmost())
+					Lmost() = Z;
+			}
+			else
+			{
+				Right(Y) = Z;
+				if (Y == Rmost())
+					Rmost() = Z;
+			}
+			for (Nodeptr X = Z; Color(Parent(X)) == Red; )
+			{
+				if (Parent(X) == Left(Parent(Parent(X))))
+				{
+					Y = Right(Parent(Parent(X)));
+					if (Color(Y) == Red)
+					{
+						Color(Parent(X)) = Black;
+						Color(Y) = Black;
+						Color(Parent(Parent(X))) = Red;
+						X = Parent(Parent(X));
+					}
+					else
+					{
+						if (X == Right(Parent(X)))
+						{
+							X = Parent(X);
+							Lrotate(X);
+						}
+						Color(Parent(X)) = Black;
+						Color(Parent(Parent(X))) = Red;
+						Rrotate(Parent(Parent(X)));
+					}
+				}
+				else
+				{
+					Y = Left(Parent(Parent(X)));
+					if (Color(Y) == Red)
+					{
+						Color(Parent(X)) = Black;
+						Color(Y) = Black;
+						Color(Parent(Parent(X))) = Red;
+						X = Parent(Parent(X));
+					}
+					else
+					{
+						if (X == Left(Parent(X)))
+						{
+							X = Parent(X);
+							Rrotate(X);
+						}
+						Color(Parent(X)) = Black;
+						Color(Parent(Parent(X))) = Red;
+						Lrotate(Parent(Parent(X)));
+					}
+				}
+			}
+			Color(Root()) = Black;
+			return iterator(Z);
+		}
+
+		Nodeptr	Lbound(const key_type& Kv) const
+		{
+			Nodeptr X = Root();
+			Nodeptr Y = Head;
+			while (!(Isnil(X)))
+			{
+				if (comp(Key(X), Kv))
+					X = Right(X);
+				else
+					Y = X, X = Left(X);
+			}
+			return (Y);
+		}
+
+		Nodeptr&	Lmost()
+		{
+			return Left(Head);
+		}
+
+		Nodeptr&	Lmost() const
+		{
+			return (Left(Head));
+		}
+
+		void	Lrotate(Nodeptr X)
+		{
+			Nodeptr Y = Right(X);
+			Right(X) = Left(Y);
+			if (!Isnil(Left(Y)))
+				Parent(Left(Y)) = X;
+			Parent(Y) = Parent(X);
+			if (X == Root())
+				Root() = Y;
+			else if (X == Left(Parent(X)))
+				Left(Parent(X)) = Y;
+			else
+				Right(Parent(X)) = Y;
+			Left(Y) = X;
+			Parent(X) = Y;
+		}
+
+		static Nodeptr Max(Nodeptr P)
+		{
+			while (!Isnil(Right(P)))
+				P = Right(P);
+			return P;
+		}
+
+		static Nodeptr Min(Nodeptr P)
+		{
+			while (!Isnil(Left(P)))
+				P = Left(P);
+			return P;
+		}
+
+		Nodeptr& Rmost()
+		{
+			return Right(Head);
+		}
+
+		Nodeptr& Rmost() const
+		{
+			return Right(Heead);
+		}
+
+		Nodeptr& Root()
+		{
+			return Parent(Head);
+		}
+
+
+		Nodeptr& Root() const
+		{
+			return Parent(Head);
+		}
+
+		void Rrotate(Nodeptr X)
+		{
+			Nodeptr Y = Left(X);
+			Left(X) = Right(Y);
+			if (!Isnil(Right(Y)))
+				Parent(Right(Y)) = X;
+			Parent(Y) = Parent(X);
+			if (X == Root())
+				Root() = Y;
+			else if (X == Right(Parent(X)))
+				Right(Parent(X)) = Y;
+			else
+				Left(Parent(X)) = Y;
+			Right(Y) = X;
+			Parent(X) = Y;
+		}
+
+		Nodeptr Ubound(const key_type& Kv) const
+		{
+			Nodeptr X = Root();
+			Nodeptr Y = Head;
+			while (!Isnil(X))
+			{
+				if (comp(Kv, Key(x)))
+					Y = X, X = Left(X);
+				else
+					X = Right(X);
+			}
+			return Y;
+		}
+
+		Nodeptr	Buynode(Nodeptr Parg, char Carg)
+		{
+			Nodeptr S = Alnod.allocate(1);
+			Alptr.construct(&Left(S), nullptr);
+			Alptr.construct(&Right(S), nullptr);
+			Alptr.construct(&Parent(S), Parg);
+			Color(S) = Carg;
+			Isnil(S) = false;
+			return S;
+		}
+
+		void	Consval(Tptr P, const value_type& V)
+		{
+			Alval.construct(P, V);
+		}
+
+		void	Destval(Tptr P)
+		{
+			Alval.destroy(P);
+		}
+
+		void	Freenode(Nodeptr S)
+		{
+			Alptr.destroy(&Parent(S));
+			Alptr.destroy(&Right(S));
+			Alptr.destroy(&Left(S));
+			Alnod.deallocate(S, 1);
+		}
 	};
 }
