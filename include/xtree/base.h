@@ -6,22 +6,33 @@
 /*   By: dwillard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 17:48:56 by dwillard          #+#    #+#             */
-/*   Updated: 2022/06/29 16:10:57 by dwillard         ###   ########.fr       */
+/*   Updated: 2022/06/30 17:42:37 by dwillard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include "TreeVal.h"
-//#include "titerator.h"
+#include "TreePtr.h"
+#include "Node.h"
 #include "../iterator/iterator.h"
 #include "../utils/utils.h"
+#include "../algorithm/equal.h"
+#include "../algorithm/lexicographical_compare.h"
 
 namespace ft
 {
 	template <class TreeTraits>
 	class Tree : public TreeVal<TreeTraits>
 	{
+	public:
+		typedef Tree<TreeTraits>	Myt;
+		typedef TreeVal<TreeTraits>	Mybase;
+		typedef typename TreeTraits::key_type		key_type;
+		typedef typename TreeTraits::key_compare	key_compare;
+		typedef typename TreeTraits::value_compare	value_compare;
+		typedef typename TreeTraits::value_type		value_type;
+		typedef typename TreeTraits::allocator_type	allocator_type;
 	protected:
 		typedef typename TreeNode<TreeTraits>::Genptr Genptr;
 		typedef typename TreeNode<TreeTraits>::Node		Node;
@@ -68,14 +79,6 @@ namespace ft
 		}
 
 	public:
-		typedef Tree<TreeTraits>	Myt;
-		typedef TreeVal<TreeTraits>	Mybase;
-		typedef typename TreeTraits::key_type		key_type;
-		typedef typename TreeTraits::key_compare	key_compare;
-		typedef typename TreeTraits::value_compare	value_compare;
-		typedef typename TreeTraits::value_type		value_type;
-		typedef typename TreeTraits::allocator_type	allocator_type;
-		typedef typename TreeTraits::comp			comp;
 
 
 		typedef typename allocator_type::size_type			size_type;
@@ -325,7 +328,7 @@ namespace ft
 			if (this != &X)
 			{
 				erase(begin(), end());
-				comp = X.comp;
+				TreeTraits::comp = X.TreeTraits::comp;
 				Copy(X);
 			}
 			return *this;
@@ -333,11 +336,11 @@ namespace ft
 
 		iterator	begin()
 			{ return iterator(Lmost()); }
-		const_iterator	begin()
+		const_iterator	begin() const
 			{ return const_iterator(Lmost()); }
 		iterator	end()
 			{ return iterator(Head()); }
-		const_iterator	end()
+		const_iterator	end() const
 			{ return const_iterator(Head()); }
 
 		reverse_iterator	rbegin()
@@ -353,13 +356,13 @@ namespace ft
 		size_type	size() const
 			{ return Size; }
 		size_type	max_size() const
-			{ return Alval.max_size(); }
+			{ return this->Alval.max_size(); }
 		bool	empty() const
 			{ return size() == 0; }
 		allocator_type	get_allocator() const
-			{ return Alval; }
+			{ return this->Alval; }
 		key_compare	key_comp() const
-			{ return comp; }
+			{ return TreeTraits::comp; }
 		value_compare	value_comp() const
 			{ return value_compare(key_comp()); }
 
@@ -372,7 +375,7 @@ namespace ft
 			while (!Isnil(X))
 			{
 				Y = X;
-				Addleft = comp(Kfn()(V), Key(X));
+				Addleft = TreeTraits::comp(Kfn()(V), Key(X));
 				X = Addleft ? Left(X) : Right(X);
 			}
 			iterator P = iterator(Y);
@@ -382,7 +385,7 @@ namespace ft
 				return (Pairib(Insert(true, Y, V), true));
 			else
 				--P;
-			if (comp(Key(P.Mynode()), Kfn()(V)))
+			if (TreeTraits::comp(Key(P.Mynode()), Kfn()(V)))
 				return (Pairib(Insert(Addleft, Y, V), true));
 			else
 				return (Pairib(P, false));
@@ -393,14 +396,14 @@ namespace ft
 				return Insert(true, Head, V);
 			else if (P == begin())
 			{
-				if (comp(kfn()(V), Key(P.Mynode())))
+				if (TreeTraits::comp(Kfn()(V), Key(P.Mynode())))
 					return Insert(false, Rmost(), V);
 			}
 			else
 			{
 				iterator	Pb = P;
-				if (comp(Key((--Pb).Mynode()), Kfn()(V))
-				&& comp(Kfn()(V), Key(P.Mynode()))) {
+				if (TreeTraits::comp(Key((--Pb).Mynode()), Kfn()(V))
+				&& TreeTraits::comp(Kfn()(V), Key(P.Mynode()))) {
 					if (Isnil(Right(Pb.Mynode())))
 						return Insert(false, Pb.Mynode(), V);
 					else
@@ -592,19 +595,19 @@ https://www.quora.com/Why-was-the-comma-operator-introduced-in-C-and-C-I-am-yet-
 
 		void	clear()
 		{
-			erase(begin, end());
+			erase(begin(), end());
 		}
 
 		iterator	find(const key_type& Kv)
 		{
 			iterator P = lower_bound(Kv);
-			return (p == end() || comp(Kv, Key(P.Mynode())) ? end() : P);
+			return (P == end() || TreeTraits::comp(Kv, Key(P.Mynode())) ? end() : P);
 		}
 
 		const_iterator	find(const key_type& Kv) const
 		{
 			const_iterator P = lower_bound(Kv);
-			return (p == end() || comp(Kv, Key(P.Mynode())) ? end() : P);
+			return (P == end() || TreeTraits::comp(Kv, Key(P.Mynode())) ? end() : P);
 		}
 
 		size_type	count(const key_type& Kv) const
@@ -650,8 +653,8 @@ https://www.quora.com/Why-was-the-comma-operator-introduced-in-C-and-C-I-am-yet-
 		{
 			if (get_allocator() == X.get_allocator())
 			{
-				std::swap(comp, X.comp);
-				std::swap(Head, x.Head);
+				std::swap(TreeTraits::comp, X.TreeTraits::comp);
+				std::swap(Head, X.Head);
 				std::swap(Size, X.Size);
 			}
 			else
@@ -698,7 +701,7 @@ https://www.quora.com/Why-was-the-comma-operator-introduced-in-C-and-C-I-am-yet-
 
 		void	Erase(Nodeptr X)
 		{
-			for (Nodeptr Y + X; !Isnil(Y); X = Y)
+			for (Nodeptr Y = X; !Isnil(Y); X = Y)
 			{
 				Erase(Right(Y));
 				Y = Left(Y);
@@ -804,7 +807,7 @@ https://www.quora.com/Why-was-the-comma-operator-introduced-in-C-and-C-I-am-yet-
 			Nodeptr Y = Head;
 			while (!(Isnil(X)))
 			{
-				if (comp(Key(X), Kv))
+				if (TreeTraits::comp(Key(X), Kv))
 					X = Right(X);
 				else
 					Y = X, X = Left(X);
@@ -860,7 +863,7 @@ https://www.quora.com/Why-was-the-comma-operator-introduced-in-C-and-C-I-am-yet-
 
 		Nodeptr& Rmost() const
 		{
-			return Right(Heead);
+			return Right(Head);
 		}
 
 		Nodeptr& Root()
@@ -897,7 +900,7 @@ https://www.quora.com/Why-was-the-comma-operator-introduced-in-C-and-C-I-am-yet-
 			Nodeptr Y = Head;
 			while (!Isnil(X))
 			{
-				if (comp(Kv, Key(x)))
+				if (TreeTraits::comp(Kv, Key(X)))
 					Y = X, X = Left(X);
 				else
 					X = Right(X);
@@ -907,10 +910,10 @@ https://www.quora.com/Why-was-the-comma-operator-introduced-in-C-and-C-I-am-yet-
 
 		Nodeptr	Buynode(Nodeptr Parg, char Carg)
 		{
-			Nodeptr S = Alnod.allocate(1);
-			Alptr.construct(&Left(S), nullptr);
-			Alptr.construct(&Right(S), nullptr);
-			Alptr.construct(&Parent(S), Parg);
+			Nodeptr S = this->Alnod.allocate(1);
+			this->Alptr.construct(&Left(S), nullptr);
+			this->Alptr.construct(&Right(S), nullptr);
+			this->Alptr.construct(&Parent(S), Parg);
 			Color(S) = Carg;
 			Isnil(S) = false;
 			return S;
@@ -918,20 +921,62 @@ https://www.quora.com/Why-was-the-comma-operator-introduced-in-C-and-C-I-am-yet-
 
 		void	Consval(Tptr P, const value_type& V)
 		{
-			Alval.construct(P, V);
+			this->Alval.construct(P, V);
 		}
 
 		void	Destval(Tptr P)
 		{
-			Alval.destroy(P);
+			this->Alval.destroy(P);
 		}
 
 		void	Freenode(Nodeptr S)
 		{
-			Alptr.destroy(&Parent(S));
-			Alptr.destroy(&Right(S));
-			Alptr.destroy(&Left(S));
-			Alnod.deallocate(S, 1);
+			this->Alptr.destroy(&Parent(S));
+			this->Alptr.destroy(&Right(S));
+			this->Alptr.destroy(&Left(S));
+			this->Alnod.deallocate(S, 1);
 		}
 	};
+
+	template <class TreeTraits> inline
+	void	swap(Tree<TreeTraits>& X, Tree<TreeTraits>& Y)
+	{
+		X.swap(Y);
+	}
+
+	template <class TreeTraits> inline
+	bool	operator== (const Tree<TreeTraits>& X, const Tree<TreeTraits>& Y)
+	{
+		return (X.size() == Y.size() && equal(X.begin(), X.end(), Y.begin()));
+	}
+
+	template <class TreeTraits> inline
+	bool	operator!= (const Tree<TreeTraits>& X, const Tree<TreeTraits>& Y)
+	{
+		return !(X == Y);
+	}
+
+	template <class TreeTraits> inline
+	bool	operator< (const Tree<TreeTraits>& X, const Tree<TreeTraits>& Y)
+	{
+		return lexicographical_compare(X.begin(), X.end(), Y.begin(), Y.end(), X.value_comp());
+	}
+
+	template <class TreeTraits> inline
+	bool	operator> (const Tree<TreeTraits>& X, const Tree<TreeTraits>& Y)
+	{
+		return Y < X;
+	}
+
+	template <class TreeTraits> inline
+	bool	operator<= (const Tree<TreeTraits>& X, const Tree<TreeTraits>& Y)
+	{
+		return !(Y < X);
+	}
+
+	template <class TreeTraits> inline
+	bool	operator>= (const Tree<TreeTraits>& X, const Tree<TreeTraits>& Y)
+	{
+		return !(X < Y);
+	}
 }
