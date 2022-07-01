@@ -12,24 +12,20 @@
 
 #pragma once
 
+#include "mismatch.h"
+
 namespace ft
 {
 	template <class InIt1, class InIt2>
 		inline bool equal(InIt1 first, InIt1 last, InIt2 ref)
 	{
-		for (int i = 0; first < last; i++)
-			if (!(*(first + i) == *(ref + i)))
-				return false;
-		return true;
+		return ft::mismatch(first, last, ref).first == last;
 	}
 
 	template <class InIt1, class InIt2, class BinaryPredicate>
 		inline bool equal(InIt1 first, InIt1 last,
 		InIt2 ref, BinaryPredicate p)
 	{
-		for (; first != last; ++first, ++ref)
-			if (!p(*first, *ref))
-				return false;
-		return true;
+		return ft::mismatch(first, last, ref).first == last;
 	}
 }

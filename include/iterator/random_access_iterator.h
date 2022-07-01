@@ -16,10 +16,10 @@
 
 namespace ft
 {
-	template	<	class Type, class Dist, class Ptr, class Ref,
+	template	<class Type, class Dist, class Ptr, class Ref,
 					class Ptr_const, class Ref_const>
 	class random_access_iterator :
-		public ft::iterator	<	ft::random_access_iterator_tag,
+		public ft::iterator	<ft::random_access_iterator_tag,
 								Type, Dist, Ptr, Ref>
 	{
 	protected:
@@ -36,7 +36,7 @@ namespace ft
 
 		}
 		explicit random_access_iterator
-			(const random_access_iterator<	Type, Dist, Ptr, Ref,
+			(const random_access_iterator <Type, Dist, Ptr, Ref,
 											Ptr_const, Ref_const>& other):
 			current(other.base)
 		{

@@ -34,7 +34,7 @@ namespace ft
 		typedef T							value_type;
 		typedef T*							pointer;
 		typedef T&							reference;
-		typedef ptrdiff_t					difference_type;
+		typedef ptrdiff_t					distance_type;
 		typedef random_access_iterator_tag	iterator_category;
 	};
 
@@ -44,7 +44,7 @@ namespace ft
 		typedef T							value_type;
 		typedef T*							pointer;
 		typedef T&							reference;
-		typedef ptrdiff_t					difference_type;
+		typedef ptrdiff_t					distance_type;
 		typedef random_access_iterator_tag	iterator_category;
 	};
 }

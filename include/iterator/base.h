@@ -21,7 +21,7 @@ namespace ft
 	struct iterator
 	{
 		typedef T			value_type;
-		typedef	Distance	difference_type;
+		typedef	Distance	distance_type;
 		typedef	Pointer		pointer;
 		typedef	Reference	reference;
 		typedef	Category	iterator_category;

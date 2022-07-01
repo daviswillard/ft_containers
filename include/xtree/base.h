@@ -6,7 +6,7 @@
 /*   By: dwillard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 17:48:56 by dwillard          #+#    #+#             */
-/*   Updated: 2022/06/30 17:42:37 by dwillard         ###   ########.fr       */
+/*   Updated: 2022/07/01 16:21:32 by dwillard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "TreeVal.h"
 #include "TreePtr.h"
 #include "Node.h"
+#include <stdexcept>
 #include "../iterator/iterator.h"
 #include "../utils/utils.h"
 #include "../algorithm/equal.h"
@@ -26,8 +27,8 @@ namespace ft
 	class Tree : public TreeVal<TreeTraits>
 	{
 	public:
-		typedef Tree<TreeTraits>	Myt;
-		typedef TreeVal<TreeTraits>	Mybase;
+		typedef Tree<TreeTraits>					Myt;
+		typedef TreeVal<TreeTraits>					Mybase;
 		typedef typename TreeTraits::key_type		key_type;
 		typedef typename TreeTraits::key_compare	key_compare;
 		typedef typename TreeTraits::value_compare	value_compare;
@@ -36,7 +37,9 @@ namespace ft
 	protected:
 		typedef typename TreeNode<TreeTraits>::Genptr Genptr;
 		typedef typename TreeNode<TreeTraits>::Node		Node;
+
 		enum	Redbl {Red, Black};
+
 		typedef typename allocator_type::template
 				rebind<Node>::other::pointer				Nodeptr;
 		typedef typename allocator_type::template
@@ -143,8 +146,8 @@ namespace ft
 			typedef	ft::iterator<ft::bidirectional_iterator_tag, value_type,
 					Dift, Tptr, Reft>						Mybase;
 			typedef typename Mybase::iterator_category		iterator_category;
-			typedef typename Mybase::value_type				value_type;
-			typedef typename Mybase::difference_type		difference_type;
+//			typedef typename Mybase::value_type				value_type;
+			typedef typename Mybase::distance_type			distance_type;
 			typedef typename Mybase::pointer				pointer;
 			typedef typename Mybase::reference				reference;
 
@@ -235,8 +238,8 @@ namespace ft
 			typedef	ft::iterator<ft::bidirectional_iterator_tag, value_type,
 					Dift, Ctptr, const_reference>			Mybase;
 			typedef typename Mybase::iterator_category		iterator_category;
-			typedef typename Mybase::value_type				value_type;
-			typedef typename Mybase::difference_type		difference_type;
+//			typedef typename Mybase::value_type				value_type;
+			typedef typename Mybase::distance_type			distance_type;
 			typedef typename Mybase::pointer				pointer;
 			typedef typename Mybase::reference				reference;
 
@@ -328,7 +331,7 @@ namespace ft
 			if (this != &X)
 			{
 				erase(begin(), end());
-				TreeTraits::comp = X.TreeTraits::comp;
+				TreeTraits::comp = X.comp;
 				Copy(X);
 			}
 			return *this;
@@ -339,9 +342,9 @@ namespace ft
 		const_iterator	begin() const
 			{ return const_iterator(Lmost()); }
 		iterator	end()
-			{ return iterator(Head()); }
+			{ return iterator(Head); }
 		const_iterator	end() const
-			{ return const_iterator(Head()); }
+			{ return const_iterator(Head); }
 
 		reverse_iterator	rbegin()
 			{ return reverse_iterator(end()); }
@@ -375,7 +378,7 @@ namespace ft
 			while (!Isnil(X))
 			{
 				Y = X;
-				Addleft = TreeTraits::comp(Kfn()(V), Key(X));
+				Addleft = TreeTraits::comp(TreeTraits::GetKey(V), Key(X));
 				X = Addleft ? Left(X) : Right(X);
 			}
 			iterator P = iterator(Y);
@@ -385,7 +388,7 @@ namespace ft
 				return (Pairib(Insert(true, Y, V), true));
 			else
 				--P;
-			if (TreeTraits::comp(Key(P.Mynode()), Kfn()(V)))
+			if (TreeTraits::comp(Key(P.Mynode()), TreeTraits::GetKey(V)))
 				return (Pairib(Insert(Addleft, Y, V), true));
 			else
 				return (Pairib(P, false));
@@ -396,14 +399,14 @@ namespace ft
 				return Insert(true, Head, V);
 			else if (P == begin())
 			{
-				if (TreeTraits::comp(Kfn()(V), Key(P.Mynode())))
+				if (TreeTraits::comp(TreeTraits::GetKey(V), Key(P.Mynode())))
 					return Insert(false, Rmost(), V);
 			}
 			else
 			{
 				iterator	Pb = P;
-				if (TreeTraits::comp(Key((--Pb).Mynode()), Kfn()(V))
-				&& TreeTraits::comp(Kfn()(V), Key(P.Mynode()))) {
+				if (TreeTraits::comp(Key((--Pb).Mynode()), TreeTraits::GetKey(V))
+				&& TreeTraits::comp(TreeTraits::GetKey(V), Key(P.Mynode()))) {
 					if (Isnil(Right(Pb.Mynode())))
 						return Insert(false, Pb.Mynode(), V);
 					else
@@ -542,7 +545,7 @@ https://www.quora.com/Why-was-the-comma-operator-introduced-in-C-and-C-I-am-yet-
 						{
 							if (Color(Left(W)) == Black)
 							{
-								Color(Right(W)) == Black;
+								Color(Right(W)) = Black;
 								Color(W) = Red;
 								Lrotate(W);
 								W = Left(Xpar);
@@ -583,7 +586,7 @@ https://www.quora.com/Why-was-the-comma-operator-introduced-in-C-and-C-I-am-yet-
 		{
 			Pairii P = equal_range(X);
 			size_type N = 0;
-			Distance(P.first, P.second, N);
+			ft::distance_tree(P.first, P.second, N);
 			erase(P.first, P.second);
 			return N;
 		}
@@ -614,7 +617,7 @@ https://www.quora.com/Why-was-the-comma-operator-introduced-in-C-and-C-I-am-yet-
 		{
 			Paircc Ans = equal_range(Kv);
 			size_type N = 0;
-			Distance(Ans.first, Ans.second, N);
+			distance_tree(Ans.first, Ans.second, N);
 			return N;
 		}
 
@@ -678,7 +681,10 @@ https://www.quora.com/Why-was-the-comma-operator-introduced-in-C-and-C-I-am-yet-
 				Rmost() = Max(Root());
 			}
 			else
-				Lmost() = Head, Rmost() = Head;
+			{
+				Lmost() = Head;
+				Rmost() = Head;
+			}
 		}
 
 		Nodeptr	Copy(Nodeptr X, Nodeptr P)
@@ -725,7 +731,7 @@ https://www.quora.com/Why-was-the-comma-operator-introduced-in-C-and-C-I-am-yet-
 			if (max_size() - 1 <= Size)
 				throw std::length_error("map/set<T> too long");
 			Nodeptr Z = Buynode(Y, Red);
-			Left(Z) = Head, Rigth(Z) = Head;
+			Left(Z) = Head, Right(Z) = Head;
 			try {
 				Consval(&Value(Z), V);
 			} catch (...) {
@@ -959,7 +965,7 @@ https://www.quora.com/Why-was-the-comma-operator-introduced-in-C-and-C-I-am-yet-
 	template <class TreeTraits> inline
 	bool	operator< (const Tree<TreeTraits>& X, const Tree<TreeTraits>& Y)
 	{
-		return lexicographical_compare(X.begin(), X.end(), Y.begin(), Y.end(), X.value_comp());
+		return ft::lexicographical_compare(X.begin(), X.end(), Y.begin(), Y.end(), X.value_comp());
 	}
 
 	template <class TreeTraits> inline
