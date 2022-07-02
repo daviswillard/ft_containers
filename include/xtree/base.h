@@ -701,6 +701,15 @@ https://www.quora.com/Why-was-the-comma-operator-introduced-in-C-and-C-I-am-yet-
 					throw;
 				}
 				Left(Y) = Head, Right(Y) = Head;
+				if (Isnil(R))
+					R = Y;
+				try {
+					Left(Y) = Copy(Left(X), Y);
+					Right(Y) = Copy(Right(X), Y);
+				} catch (...) {
+					Erase(R);
+					throw;
+				}
 			}
 			return R;
 		}
