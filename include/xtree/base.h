@@ -27,16 +27,16 @@ namespace ft
 	class Tree : public TreeVal<TreeTraits>
 	{
 	public:
-		typedef Tree<TreeTraits>					Myt;
-		typedef TreeVal<TreeTraits>					Mybase;
-		typedef typename TreeTraits::key_type		key_type;
-		typedef typename TreeTraits::key_compare	key_compare;
-		typedef typename TreeTraits::value_compare	value_compare;
-		typedef typename TreeTraits::value_type		value_type;
-		typedef typename TreeTraits::allocator_type	allocator_type;
+		typedef Tree<TreeTraits>							Myt;
+		typedef TreeVal<TreeTraits>							Mybase;
+		typedef typename TreeTraits::key_type				key_type;
+		typedef typename TreeTraits::key_compare			key_compare;
+		typedef typename TreeTraits::value_compare			value_compare;
+		typedef typename TreeTraits::value_type				value_type;
+		typedef typename TreeTraits::allocator_type			allocator_type;
 	protected:
-		typedef typename TreeNode<TreeTraits>::Genptr Genptr;
-		typedef typename TreeNode<TreeTraits>::Node		Node;
+		typedef typename TreeNode<TreeTraits>::Genptr		Genptr;
+		typedef typename TreeNode<TreeTraits>::Node			Node;
 
 		enum	Redbl {Red, Black};
 
@@ -393,6 +393,7 @@ namespace ft
 			else
 				return (Pairib(P, false));
 		}
+
 		iterator	insert(iterator P, const value_type& V)
 		{
 			if (size() == 0)
@@ -415,6 +416,7 @@ namespace ft
 			}
 			return insert(V).first;
 		}
+
 		template <class Iter>
 			void insert(Iter F, Iter L)
 		{
@@ -436,9 +438,7 @@ namespace ft
 			else if (Isnil(Right(Y)))
 				X = Left(Y);
 			else
-				Y = Min(Right(Y)), X = Right(Y); /* comma operator basically does first statement, discards it
-				then calculates second statement and returns it's value
-https://www.quora.com/Why-was-the-comma-operator-introduced-in-C-and-C-I-am-yet-to-see-a-good-use-of-a-comma-operator */
+				Y = Min(Right(Y)), X = Right(Y);
 			if (Y == Z)
 			{
 				Xpar = Parent(Z);
@@ -566,6 +566,7 @@ https://www.quora.com/Why-was-the-comma-operator-introduced-in-C-and-C-I-am-yet-
 				--Size;
 			return P;
 		}
+
 		iterator erase(iterator F, iterator L)
 		{
 			if (size() == 0 || F != begin() || L != end())
@@ -582,6 +583,7 @@ https://www.quora.com/Why-was-the-comma-operator-introduced-in-C-and-C-I-am-yet-
 				return begin();
 			}
 		}
+
 		size_type	erase(const key_type& X)
 		{
 			Pairii P = equal_range(X);
@@ -590,6 +592,7 @@ https://www.quora.com/Why-was-the-comma-operator-introduced-in-C-and-C-I-am-yet-
 			erase(P.first, P.second);
 			return N;
 		}
+
 		void	erase(const key_type* F, const key_type* L)
 		{
 			while (F != L)
@@ -739,10 +742,10 @@ https://www.quora.com/Why-was-the-comma-operator-introduced-in-C-and-C-I-am-yet-
 		{
 			if (max_size() - 1 <= Size)
 				throw std::length_error("map/set<T> too long");
-			Nodeptr Z = Buynode(Y, Red);
+			Nodeptr Z = Buynode(Y, Red);	//create new node that we insert. Y is considered its parent node
 			Left(Z) = Head, Right(Z) = Head;
 			try {
-				Consval(&Value(Z), V);
+				Consval(&Value(Z), V); //initialize its value
 			} catch (...) {
 				Freenode(Z);
 				throw;
@@ -753,7 +756,7 @@ https://www.quora.com/Why-was-the-comma-operator-introduced-in-C-and-C-I-am-yet-
 				Root() = Z;
 				Lmost() = Z, Rmost() = Z;
 			}
-			else if (Addleft)
+			else if (Addleft) //check whether to add it to the left of node Y or not
 			{
 				Left(Y) = Z;
 				if (Y == Lmost())
@@ -765,7 +768,7 @@ https://www.quora.com/Why-was-the-comma-operator-introduced-in-C-and-C-I-am-yet-
 				if (Y == Rmost())
 					Rmost() = Z;
 			}
-			for (Nodeptr X = Z; Color(Parent(X)) == Red; )
+			for (Nodeptr X = Z; Color(Parent(X)) == Red; ) //check that we didn't disbalance our tree
 			{
 				if (Parent(X) == Left(Parent(Parent(X))))
 				{
@@ -791,7 +794,7 @@ https://www.quora.com/Why-was-the-comma-operator-introduced-in-C-and-C-I-am-yet-
 				}
 				else
 				{
-					Y = Left(Parent(Parent(X)));
+					Y = Left(Parent(Parent(X))); // 1
 					if (Color(Y) == Red)
 					{
 						Color(Parent(X)) = Black;
@@ -806,9 +809,9 @@ https://www.quora.com/Why-was-the-comma-operator-introduced-in-C-and-C-I-am-yet-
 							X = Parent(X);
 							Rrotate(X);
 						}
-						Color(Parent(X)) = Black;
-						Color(Parent(Parent(X))) = Red;
-						Lrotate(Parent(Parent(X)));
+						Color(Parent(X)) = Black; // 2
+						Color(Parent(Parent(X))) = Red; // 3
+						Lrotate(Parent(Parent(X))); // 4
 					}
 				}
 			}
@@ -842,19 +845,19 @@ https://www.quora.com/Why-was-the-comma-operator-introduced-in-C-and-C-I-am-yet-
 
 		void	Lrotate(Nodeptr X)
 		{
-			Nodeptr Y = Right(X);
-			Right(X) = Left(Y);
+			Nodeptr Y = Right(X); // 1
+			Right(X) = Left(Y); // 2
 			if (!Isnil(Left(Y)))
-				Parent(Left(Y)) = X;
-			Parent(Y) = Parent(X);
+				Parent(Left(Y)) = X; // 3
+			Parent(Y) = Parent(X); //4
 			if (X == Root())
 				Root() = Y;
 			else if (X == Left(Parent(X)))
-				Left(Parent(X)) = Y;
+				Left(Parent(X)) = Y; //5
 			else
 				Right(Parent(X)) = Y;
-			Left(Y) = X;
-			Parent(X) = Y;
+			Left(Y) = X; //6
+			Parent(X) = Y; //7
 		}
 
 		static Nodeptr Max(Nodeptr P)
@@ -894,19 +897,19 @@ https://www.quora.com/Why-was-the-comma-operator-introduced-in-C-and-C-I-am-yet-
 
 		void Rrotate(Nodeptr X)
 		{
-			Nodeptr Y = Left(X);
-			Left(X) = Right(Y);
+			Nodeptr Y = Left(X); //1
+			Left(X) = Right(Y); //2
 			if (!Isnil(Right(Y)))
-				Parent(Right(Y)) = X;
-			Parent(Y) = Parent(X);
+				Parent(Right(Y)) = X; //3
+			Parent(Y) = Parent(X); //4
 			if (X == Root())
 				Root() = Y;
 			else if (X == Right(Parent(X)))
 				Right(Parent(X)) = Y;
 			else
-				Left(Parent(X)) = Y;
-			Right(Y) = X;
-			Parent(X) = Y;
+				Left(Parent(X)) = Y; //5
+			Right(Y) = X; //6
+			Parent(X) = Y; //7
 		}
 
 		Nodeptr Ubound(const key_type& Kv) const

@@ -18,9 +18,9 @@ namespace ft
 	public:
 		Pred	comp;
 
-		typedef							Key key_type;
-		typedef							Key value_type;
-		typedef							Pred key_compare;
+		typedef Key						key_type;
+		typedef Key						value_type;
+		typedef Pred					key_compare;
 		typedef typename Ax::template
 			rebind<value_type>::other	allocator_type;
 
@@ -47,5 +47,4 @@ namespace ft
 			}
 		};
 	};
-
 }
