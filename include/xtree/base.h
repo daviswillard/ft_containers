@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#ifndef BASE_H
+# define BASE_H
 
 #include "TreeVal.h"
 #include "TreePtr.h"
@@ -102,194 +103,13 @@ namespace ft
 		typedef Reft										reference;
 
 
-//		typedef	ft::titerator<TreeTraits>					iterator;
-//		friend class	titerator<TreeTraits>
-
 		class	        iterator;
-		friend class	iterator;
-        class iterator : public ft::iterator<bidirectional_iterator_tag, value_type,
-				Dift, Tptr, Reft>
-		{
-        private:
-            void Dec()
-            {
-                if (Isnil(current_))
-                    current_ = Right(current_);
-                else if (!Isnil(Left(current_)))
-                    current_ = Max(Left(current_));
-                else
-                {
-                    Nodeptr P;
-                    while (!Isnil(P = Parent(current_)) && current_ == Left(P))
-                        current_ = P;
-                    if (!Isnil(P))
-                        current_ = P;
-                }
-            }
-            void Inc()
-            {
-                if (Isnil(current_))
-                    ;
-                else if (!Isnil(Right(current_)))
-                    current_ = Min(Right(current_));
-                else
-                {
-                    Nodeptr P;
-                    while (!Isnil(P = Parent(current_)) && current_ == Right(P))
-                        current_ = P;
-                    current_ = P;
-                }
-            }
-		protected:
-			Nodeptr	current_;
-		public:
-			typedef	ft::iterator<ft::bidirectional_iterator_tag, value_type,
-					Dift, Tptr, Reft>						Mybase;
-			typedef typename Mybase::iterator_category		iterator_category;
-//			typedef typename Mybase::value_type				value_type;
-			typedef typename Mybase::distance_type			distance_type;
-			typedef typename Mybase::pointer				pointer;
-			typedef typename Mybase::reference				reference;
-
-            iterator() : current_(0) {}
-            explicit iterator(Nodeptr P) : current_(P) {}
-            reference   operator*() const
-            {
-                return Value(current_);
-            }
-            Tptr    operator->() const
-            {
-                return &**this;
-            }
-            iterator	operator++()
-            {
-                Inc();
-                return *this;
-            }
-            iterator	operator++(int)
-            {
-                iterator    tmp = *this;
-                ++*this;
-				return tmp;
-            }
-			iterator	operator--()
-			{
-				Dec();
-				return *this;
-			}
-			iterator	operator--(int)
-			{
-				iterator	tmp = *this;
-				--*this;
-				return tmp;
-			}
-			bool	operator==(const iterator& X) const
-			{
-				return current_ == X.current_;
-			}
-			bool	operator!=(const iterator& X) const
-			{
-				return !(*this == X);
-			}
-			Nodeptr	Mynode() const
-			{
-				return current_;
-			}
-		};
+		friend class	Tree<TreeTraits>::iterator;
+		typedef	Tree<TreeTraits>::iterator iterator;
 
 		class	        const_iterator;
-		friend class	const_iterator;
-		class const_iterator : public ft::iterator<bidirectional_iterator_tag, value_type,
-				Dift, Ctptr, const_reference>
-		{
-		private:
-			void Dec()
-			{
-				if (Isnil(current_))
-					current_ = Right(current_);
-				else if (!Isnil(Left(current_)))
-					current_ = Max(Left(current_));
-				else
-				{
-					Nodeptr P;
-					while (!Isnil(P = Parent(current_)) && current_ == Left(P))
-						current_ = P;
-					if (!Isnil(P))
-						current_ = P;
-				}
-			}
-			void Inc()
-			{
-				if (Isnil(current_))
-					;
-				else if (!Isnil(Right(current_)))
-					current_ = Min(Right(current_));
-				else
-				{
-					Nodeptr P;
-					while (!Isnil(P = Parent(current_)) && current_ == Right(P))
-						current_ = P;
-					current_ = P;
-				}
-			}
-		protected:
-			Nodeptr	current_;
-		public:
-			typedef	ft::iterator<ft::bidirectional_iterator_tag, value_type,
-					Dift, Ctptr, const_reference>			Mybase;
-			typedef typename Mybase::iterator_category		iterator_category;
-//			typedef typename Mybase::value_type				value_type;
-			typedef typename Mybase::distance_type			distance_type;
-			typedef typename Mybase::pointer				pointer;
-			typedef typename Mybase::reference				reference;
-
-			const_iterator() : current_(0) {}
-			explicit const_iterator(Nodeptr P) : current_(P) {}
-			explicit const_iterator(const typename Tree<TreeTraits>::iterator& X): current_(X.Mynode()) {}
-
-			const_reference   operator*() const
-			{
-				return Value(current_);
-			}
-			Ctptr    operator->() const
-			{
-				return &**this;
-			}
-			const_iterator&	operator++()
-			{
-				Inc();
-				return *this;
-			}
-			const_iterator	operator++(int)
-			{
-				iterator    tmp = *this;
-				++*this;
-				return tmp;
-			}
-			const_iterator&	operator--()
-			{
-				Dec();
-				return *this;
-			}
-			const_iterator	operator--(int)
-			{
-				iterator	tmp = *this;
-				--*this;
-				return tmp;
-			}
-			bool	operator==(const const_iterator& X) const
-			{
-				return current_ == X.current_;
-			}
-			bool	operator!=(const const_iterator& X) const
-			{
-				return !(*this == X);
-			}
-			Nodeptr	Mynode() const
-			{
-				return current_;
-			}
-		};
+		friend class	Tree<TreeTraits>::const_iterator;
+		typedef	Tree<TreeTraits>::const_iterator const_iterator;
 
 		typedef ft::reverse_iterator<iterator>			reverse_iterator;
 		typedef	ft::reverse_iterator<const_iterator>	const_reverse_iterator;
@@ -370,234 +190,15 @@ namespace ft
 			{ return value_compare(key_comp()); }
 
 
-		Pairib	insert(const value_type& V)
-		{
-			Nodeptr	X = Root();
-			Nodeptr	Y = Head;
-			bool	Addleft = true;
-			while (!Isnil(X))
-			{
-				Y = X;
-				Addleft = TreeTraits::comp(TreeTraits::GetKey(V), Key(X));
-				X = Addleft ? Left(X) : Right(X);
-			}
-			iterator P = iterator(Y);
-			if (!Addleft)
-				;
-			else if (P == begin())
-				return (Pairib(Insert(true, Y, V), true));
-			else
-				--P;
-			if (TreeTraits::comp(Key(P.Mynode()), TreeTraits::GetKey(V)))
-				return (Pairib(Insert(Addleft, Y, V), true));
-			else
-				return (Pairib(P, false));
-		}
-
-		iterator	insert(iterator P, const value_type& V)
-		{
-			if (size() == 0)
-				return Insert(true, Head, V);
-			else if (P == begin())
-			{
-				if (TreeTraits::comp(TreeTraits::GetKey(V), Key(P.Mynode())))
-					return Insert(false, Rmost(), V);
-			}
-			else
-			{
-				iterator	Pb = P;
-				if (TreeTraits::comp(Key((--Pb).Mynode()), TreeTraits::GetKey(V))
-				&& TreeTraits::comp(TreeTraits::GetKey(V), Key(P.Mynode()))) {
-					if (Isnil(Right(Pb.Mynode())))
-						return Insert(false, Pb.Mynode(), V);
-					else
-						return Insert(true, P.Mynode(), V);
-				}
-			}
-			return insert(V).first;
-		}
-
+		Pairib		insert(const value_type& V);
+		iterator	insert(Tree::iterator P, const value_type& V);
 		template <class Iter>
-			void insert(Iter F, Iter L)
-		{
-			for (; F != L; ++F)
-				insert(*F);
-		}
+			void 	insert(Iter F, Iter L);
 
-
-		iterator	erase(iterator P)
-		{
-			if (Isnil(P.Mynode()))
-				throw std::out_of_range("map/set<T> iterator");
-			Nodeptr X;
-			Nodeptr Xpar;
-			Nodeptr Y = (P++).Mynode();
-			Nodeptr	Z = Y;
-			if (Isnil(Left(Y)))
-				X = Right(Y);
-			else if (Isnil(Right(Y)))
-				X = Left(Y);
-			else
-				Y = Min(Right(Y)), X = Right(Y);
-			if (Y == Z)
-			{
-				Xpar = Parent(Z);
-				if (!Isnil(X))
-					Parent(X) = Xpar;
-				if (Root() == Z)
-					Root() = X;
-				else if (Left(Xpar) == Z)
-					Left(Xpar) = X;
-				else
-					Right(Xpar) = X;
-				if (Lmost() != Z)
-					;
-				else if (Isnil(Right(Z)))
-					Lmost() = Xpar;
-				else
-					Lmost() = Min(X);
-				if (Rmost() != Z)
-					;
-				else if (Isnil(Left(Z)))
-					Rmost() = Xpar;
-				else
-					Rmost() = Max(X);
-			}
-			else
-			{
-				Parent((Left(Z))) = Y;
-				Left(Y) = Left(Z);
-				if (Y == Right(Z))
-					Xpar = Y;
-				else
-				{
-					Xpar = Parent(Y);
-					if (!Isnil(X))
-						Parent(X) = Xpar;
-					Left(Xpar) = X;
-					Right(Y) = Right(Z);
-					Parent(Right(Z)) = Y;
-				}
-				if (Root() == Z)
-					Root() = Y;
-				else if (Left(Parent(Z)) == Z)
-					Left(Parent(Z)) = Y;
-				else
-					Right(Parent(Z)) = Y;
-				Parent(Y) = Parent(Z);
-				std::swap(Color(Y), Color(Z));
-			}
-			if (Color(Z) == Black)
-			{
-				for (; X != Root() && Color(X) == Black; Xpar = Parent(X))
-				{
-					if (X == Left(Xpar))
-					{
-						Nodeptr W = Right(Xpar);
-						if (Color(W) == Red)
-						{
-							Color(W) = Black;
-							Color(Xpar) = Red;
-							Lrotate(Xpar);
-							W = Right(Xpar);
-						}
-						if (Isnil(W))
-							X = Xpar; // shouldn't happen
-						else if (Color(Left(W)) == Black && Color(Right(W)) == Black)
-						{
-							Color(W) = Red;
-							X = Xpar;
-						}
-						else
-						{
-							if (Color(Right(W)) == Black)
-							{
-								Color(Left(W)) = Black;
-								Color(W) = Red;
-								Rrotate(W);
-								W = Right(Xpar);
-							}
-							Color(W) = Color(Xpar);
-							Color(Xpar) = Black;
-							Color(Right(W)) = Black;
-							Lrotate(Xpar);
-							break;
-						}
-					}
-					else
-					{
-						Nodeptr W = Left(Xpar);
-						if (Color(W) == Red)
-						{
-							Color(W) = Black;
-							Color(Xpar) = Red;
-							Rrotate(Xpar);
-							W = Left(Xpar);
-						}
-						if (Isnil(W))
-							X = Xpar; //shouldn't happen
-						else if (Color(Right(W)) == Black && Color(Left(W)) == Black)
-						{
-							Color(W) = Red;
-							X = Xpar;
-						}
-						else
-						{
-							if (Color(Left(W)) == Black)
-							{
-								Color(Right(W)) = Black;
-								Color(W) = Red;
-								Lrotate(W);
-								W = Left(Xpar);
-							}
-							Color(W) = Color(Xpar);
-							Color(Xpar) = Black;
-							Color(Left(W)) = Black;
-							Rrotate(Xpar);
-							break;
-						}
-					}
-				}
-				Color(X) = Black;
-			}
-			Destval(&Value(Z));
-			Freenode(Z);
-			if (0 < Size)
-				--Size;
-			return P;
-		}
-
-		iterator erase(iterator F, iterator L)
-		{
-			if (size() == 0 || F != begin() || L != end())
-			{
-				while (F != L)
-					erase(F++);
-				return (F);
-			}
-			else
-			{
-				Erase(Root());
-				Root() = Head, Size = 0;
-				Lmost() = Head, Rmost() = Head;
-				return begin();
-			}
-		}
-
-		size_type	erase(const key_type& X)
-		{
-			Pairii P = equal_range(X);
-			size_type N = 0;
-			ft::distance_tree(P.first, P.second, N);
-			erase(P.first, P.second);
-			return N;
-		}
-
-		void	erase(const key_type* F, const key_type* L)
-		{
-			while (F != L)
-				erase(*F++);
-		}
+		iterator	erase(iterator P);
+		iterator	erase(iterator F, iterator L);
+		size_type	erase(const key_type& X);
+		void		erase(const key_type* F, const key_type* L);
 
 		void	clear()
 		{
@@ -674,59 +275,13 @@ namespace ft
 		size_type	Size;
 		Nodeptr		Head;
 
-		void	Copy(const Myt& X)
-		{
-			Root() = Copy(X.Root(), Head);
-			Size = X.size();
-			if (!Isnil(Root()))
-			{
-				Lmost() = Min(Root());
-				Rmost() = Max(Root());
-			}
-			else
-			{
-				Lmost() = Head;
-				Rmost() = Head;
-			}
-		}
+		void	Copy(const Myt& X);
+		Nodeptr	Copy(Nodeptr X, Nodeptr P);
 
-		Nodeptr	Copy(Nodeptr X, Nodeptr P)
-		{
-			Nodeptr	R = Head;
-			if (!Isnil(X))
-			{
-				Nodeptr Y = Buynode(P, Color(X));
-				try {
-					Consval(&Value(Y), Value(X));
-				} catch (...) {
-					Freenode(Y);
-					Erase(R);
-					throw;
-				}
-				Left(Y) = Head, Right(Y) = Head;
-				if (Isnil(R))
-					R = Y;
-				try {
-					Left(Y) = Copy(Left(X), Y);
-					Right(Y) = Copy(Right(X), Y);
-				} catch (...) {
-					Erase(R);
-					throw;
-				}
-			}
-			return R;
-		}
+		void	Erase(Nodeptr X);
 
-		void	Erase(Nodeptr X)
-		{
-			for (Nodeptr Y = X; !Isnil(Y); X = Y)
-			{
-				Erase(Right(Y));
-				Y = Left(Y);
-				Destval(&Value(X));
-				Freenode(X);
-			}
-		}
+		iterator	Insert(bool Addleft, Nodeptr Y,
+						   const value_type& V);
 
 		void	Init()
 		{
@@ -735,88 +290,6 @@ namespace ft
 			Root() = Head;
 			Lmost() = Head, Rmost() = Head;
 			Size = 0;
-		}
-
-		iterator	Insert(bool Addleft, Nodeptr Y,
-				const value_type& V)
-		{
-			if (max_size() - 1 <= Size)
-				throw std::length_error("map/set<T> too long");
-			Nodeptr Z = Buynode(Y, Red);	//create new node that we insert. Y is considered its parent node
-			Left(Z) = Head, Right(Z) = Head;
-			try {
-				Consval(&Value(Z), V); //initialize its value
-			} catch (...) {
-				Freenode(Z);
-				throw;
-			}
-			++Size;
-			if (Y == Head)
-			{
-				Root() = Z;
-				Lmost() = Z, Rmost() = Z;
-			}
-			else if (Addleft) //check whether to add it to the left of node Y or not
-			{
-				Left(Y) = Z;
-				if (Y == Lmost())
-					Lmost() = Z;
-			}
-			else
-			{
-				Right(Y) = Z;
-				if (Y == Rmost())
-					Rmost() = Z;
-			}
-			for (Nodeptr X = Z; Color(Parent(X)) == Red; ) //check that we didn't disbalance our tree
-			{
-				if (Parent(X) == Left(Parent(Parent(X))))
-				{
-					Y = Right(Parent(Parent(X)));
-					if (Color(Y) == Red)
-					{
-						Color(Parent(X)) = Black;
-						Color(Y) = Black;
-						Color(Parent(Parent(X))) = Red;
-						X = Parent(Parent(X));
-					}
-					else
-					{
-						if (X == Right(Parent(X)))
-						{
-							X = Parent(X);
-							Lrotate(X);
-						}
-						Color(Parent(X)) = Black;
-						Color(Parent(Parent(X))) = Red;
-						Rrotate(Parent(Parent(X)));
-					}
-				}
-				else
-				{
-					Y = Left(Parent(Parent(X))); // 1
-					if (Color(Y) == Red)
-					{
-						Color(Parent(X)) = Black;
-						Color(Y) = Black;
-						Color(Parent(Parent(X))) = Red;
-						X = Parent(Parent(X));
-					}
-					else
-					{
-						if (X == Left(Parent(X)))
-						{
-							X = Parent(X);
-							Rrotate(X);
-						}
-						Color(Parent(X)) = Black; // 2
-						Color(Parent(Parent(X))) = Red; // 3
-						Lrotate(Parent(Parent(X))); // 4
-					}
-				}
-			}
-			Color(Root()) = Black;
-			return iterator(Z);
 		}
 
 		Nodeptr	Lbound(const key_type& Kv) const
@@ -997,4 +470,15 @@ namespace ft
 	{
 		return !(X < Y);
 	}
+
 }
+
+#include "TreeIterator.h"
+#include "TreeCIterator.h"
+#include "TreeInsert.h"
+#include "TreeErase.h"
+#include "TreeCopy.h"
+
+
+#endif
+
