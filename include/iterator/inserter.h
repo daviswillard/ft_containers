@@ -9,7 +9,7 @@
 /*   Updated: 2022/06/17 14:51:56 by dwillard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+/*
 #pragma once
 
 #include "iterator.h"
@@ -22,4 +22,4 @@ namespace ft
 		return ft::insert_iterator<Cont>(c, i);
 	};
 
-}
+}*/

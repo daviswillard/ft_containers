@@ -13,7 +13,8 @@
 #ifndef ADV_DIST_H
 # define ADV_DIST_H
 
-# include "iterator.h"
+# include "iterator_traits.h"
+# include "iterator_tag.h"
 
 /*advance*/
 
@@ -22,9 +23,9 @@ namespace ft
 	template <class RanIt>
 		inline
 		void advance(RanIt& iter,
-				typename ft::iterator_traits<RanIt>::difference_type _N, random_access_iterator_tag)
+				typename ft::iterator_traits<RanIt>::difference_type N, random_access_iterator_tag)
 		{
-			iter += _N;
+			iter += N;
 		}
 
 	template <class RanIt>

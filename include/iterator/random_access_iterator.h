@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#ifndef RAN_ITER_H
+#define RAN_ITER_H
 
 #include "iterator.h"
 
@@ -72,3 +73,5 @@ namespace ft
 
 	};
 }
+
+#endif

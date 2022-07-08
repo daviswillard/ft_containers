@@ -10,10 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#ifndef INSERT_ITERATOR_H
+#define INSERT_ITERATOR_H
 
+/*
 #include "iterator.h"
 #include "iterator_tag.h"
+
+	 Don't know whether it's needed
 
 namespace ft
 {
@@ -48,3 +52,6 @@ namespace ft
 
 	};
 }
+		*/
+
+#endif

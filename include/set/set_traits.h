@@ -10,6 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef SET_TRAITS_H
+#define SET_TRAITS_H
+
 namespace ft
 {
 	template <class Key, class Pred, class Ax>
@@ -36,15 +39,18 @@ namespace ft
 
 		const static Key &GetKey(const value_type &V)
 		{
-			return (V);
+			Kfn	ret;
+			return ret(V);
 		}
 
 		struct Kfn
 		{
-			const Key& operator() (const value_type& X) const
+			const Key& operator()(const value_type& X) const
 			{
 				return X;
 			}
 		};
 	};
 }
+
+#endif

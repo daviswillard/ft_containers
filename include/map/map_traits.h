@@ -1,27 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   binary_function.h                                  :+:      :+:    :+:   */
+/*   map_traits.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dwillard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/22 16:59:32 by dwillard          #+#    #+#             */
-/*   Updated: 2022/07/08 15:53:27 by dwillard         ###   ########.fr       */
+/*   Created: 2022/07/08 15:54:14 by dwillard          #+#    #+#             */
+/*   Updated: 2022/07/08 15:54:15 by dwillard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BINARY_FUNCTION_H
-#define BINARY_FUNCTION_H
-
-namespace ft
-{
-	template <class Arg1, class Arg2, class Result>
-		struct binary_function
-		{
-			typedef Arg1 first_argument_type;
-			typedef Arg2 second_argument_type;
-			typedef Result result_type;
-		};
-}
+#ifndef MAP_TRAITS_H
+#define MAP_TRAITS_H
 
 #endif

@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#ifndef SET_H
+#define SET_H
 
 #include <algorithm>
 #include <memory>
@@ -74,3 +75,5 @@ namespace ft
 		}
 	};
 }
+
+#endif

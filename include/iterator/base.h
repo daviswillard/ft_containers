@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#ifndef BASE_ITERATOR_H
+#define BASE_ITERATOR_H
 
 #include <cstddef>
 
@@ -27,3 +28,5 @@ namespace ft
 		typedef	Category	iterator_category;
 	};
 }
+
+#endif

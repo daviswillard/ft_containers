@@ -13,7 +13,7 @@
 #ifndef VAL_TYPE_H
 # define VAL_TYPE_H
 
-# include "iterator.h"
+# include "iterator_traits.h"
 
 namespace ft
 {

@@ -13,9 +13,10 @@
 #ifndef ITER_CAT_H
 # define ITER_CAT_H
 
-# include "iterator.h"
-
 /*These two functions are needed to determine iterator type*/
+
+#include "base.h"
+#include "iterator_tag.h"
 
 namespace ft
 {

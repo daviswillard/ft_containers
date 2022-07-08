@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#ifndef DIST_TYPE_H
+#define DIST_TYPE_H
 
 #include "iterator.h"
 
@@ -40,3 +41,5 @@ namespace ft
  *	}
  */
 }
+
+#endif

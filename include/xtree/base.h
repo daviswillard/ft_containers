@@ -103,6 +103,9 @@ namespace ft
 		typedef Reft										reference;
 
 
+//		Iterator
+
+
 		class	        iterator;
 		friend class	Tree<TreeTraits>::iterator;
 		typedef	Tree<TreeTraits>::iterator iterator;
@@ -117,6 +120,10 @@ namespace ft
 		typedef	pair<iterator, bool>					Pairib;
 		typedef	pair<iterator, iterator>				Pairii;
 		typedef	pair<const_iterator, const_iterator>	Paircc;
+
+
+//		Orthodox canonical form
+
 
 		explicit Tree(const key_compare& Parg, const allocator_type& Al): Mybase(Parg, Al)
 		{
@@ -157,6 +164,10 @@ namespace ft
 			return *this;
 		}
 
+
+//		iterator methods
+
+
 		iterator	begin()
 			{ return iterator(Lmost()); }
 		const_iterator	begin() const
@@ -176,6 +187,9 @@ namespace ft
 			{ return const_reverse_iterator(begin()); }
 
 
+//		util methods
+
+
 		size_type	size() const
 			{ return Size; }
 		size_type	max_size() const
@@ -188,6 +202,9 @@ namespace ft
 			{ return TreeTraits::comp; }
 		value_compare	value_comp() const
 			{ return value_compare(key_comp()); }
+
+
+//		insert-delete methods
 
 
 		Pairib		insert(const value_type& V);
@@ -205,6 +222,10 @@ namespace ft
 			erase(begin(), end());
 		}
 
+
+//		more util methods
+
+
 		iterator	find(const key_type& Kv)
 		{
 			iterator P = lower_bound(Kv);
@@ -213,6 +234,7 @@ namespace ft
 
 		const_iterator	find(const key_type& Kv) const
 		{
+
 			const_iterator P = lower_bound(Kv);
 			return (P == end() || TreeTraits::comp(Kv, Key(P.Mynode())) ? end() : P);
 		}
@@ -275,10 +297,14 @@ namespace ft
 		size_type	Size;
 		Nodeptr		Head;
 
-		void	Copy(const Myt& X);
-		Nodeptr	Copy(Nodeptr X, Nodeptr P);
 
-		void	Erase(Nodeptr X);
+//		all heavy lifting is there
+
+
+		void		Copy(const Myt& X);
+		Nodeptr		Copy(Nodeptr X, Nodeptr P);
+
+		void		Erase(Nodeptr X);
 
 		iterator	Insert(bool Addleft, Nodeptr Y,
 						   const value_type& V);
@@ -318,19 +344,19 @@ namespace ft
 
 		void	Lrotate(Nodeptr X)
 		{
-			Nodeptr Y = Right(X); // 1
-			Right(X) = Left(Y); // 2
+			Nodeptr Y = Right(X);
+			Right(X) = Left(Y);
 			if (!Isnil(Left(Y)))
-				Parent(Left(Y)) = X; // 3
-			Parent(Y) = Parent(X); //4
+				Parent(Left(Y)) = X;
+			Parent(Y) = Parent(X);
 			if (X == Root())
 				Root() = Y;
 			else if (X == Left(Parent(X)))
-				Left(Parent(X)) = Y; //5
+				Left(Parent(X)) = Y;
 			else
 				Right(Parent(X)) = Y;
-			Left(Y) = X; //6
-			Parent(X) = Y; //7
+			Left(Y) = X;
+			Parent(X) = Y;
 		}
 
 		static Nodeptr Max(Nodeptr P)
@@ -370,19 +396,19 @@ namespace ft
 
 		void Rrotate(Nodeptr X)
 		{
-			Nodeptr Y = Left(X); //1
-			Left(X) = Right(Y); //2
+			Nodeptr Y = Left(X);
+			Left(X) = Right(Y);
 			if (!Isnil(Right(Y)))
-				Parent(Right(Y)) = X; //3
-			Parent(Y) = Parent(X); //4
+				Parent(Right(Y)) = X;
+			Parent(Y) = Parent(X);
 			if (X == Root())
 				Root() = Y;
 			else if (X == Right(Parent(X)))
 				Right(Parent(X)) = Y;
 			else
-				Left(Parent(X)) = Y; //5
-			Right(Y) = X; //6
-			Parent(X) = Y; //7
+				Left(Parent(X)) = Y;
+			Right(Y) = X;
+			Parent(X) = Y;
 		}
 
 		Nodeptr Ubound(const key_type& Kv) const

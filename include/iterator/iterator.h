@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#ifndef ITERATOR_H
+#define ITERATOR_H
 
 #include <cstddef>
 #include "base.h" //Here I describe template for base iterator class
@@ -22,3 +23,5 @@
 #include "reverse_iterator.h"
 #include "insert_iterator.h"
 #include "inserter.h"
+
+#endif
