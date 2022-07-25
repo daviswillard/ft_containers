@@ -32,6 +32,74 @@ namespace ft
 			random_access_iterator_tag x;
 			return x;
 		}
+
+
+/*Overloaded Iter_cat functions helpful in vector implementation*/
+	inline Int_iterator_tag Iter_cat(bool)
+	{
+		Int_iterator_tag X;
+		return X;
+	}
+
+	inline Int_iterator_tag Iter_cat(char)
+	{
+		Int_iterator_tag X;
+		return X;
+	}
+
+	inline Int_iterator_tag Iter_cat(signed char)
+	{
+		Int_iterator_tag X;
+		return X;
+	}
+
+	inline Int_iterator_tag Iter_cat(unsigned char)
+	{
+		Int_iterator_tag X;
+		return X;
+	}
+
+	inline Int_iterator_tag Iter_cat(wchar_t)
+	{
+		Int_iterator_tag X;
+		return X;
+	}
+
+	inline Int_iterator_tag Iter_cat(short)
+	{
+		Int_iterator_tag X;
+		return X;
+	}
+
+	inline Int_iterator_tag Iter_cat(unsigned short)
+	{
+		Int_iterator_tag X;
+		return X;
+	}
+
+	inline Int_iterator_tag Iter_cat(int)
+	{
+		Int_iterator_tag X;
+		return X;
+	}
+
+	inline Int_iterator_tag Iter_cat(unsigned int)
+	{
+		Int_iterator_tag X;
+		return X;
+	}
+
+	inline Int_iterator_tag Iter_cat(long)
+	{
+		Int_iterator_tag X;
+		return X;
+	}
+
+	inline Int_iterator_tag Iter_cat(unsigned long)
+	{
+		Int_iterator_tag X;
+		return X;
+	}
 }
 
 #endif

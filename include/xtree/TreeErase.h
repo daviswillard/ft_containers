@@ -58,7 +58,7 @@ namespace ft
 		}
 		else
 		{
-			Parent((Left(Z))) = Y;
+			Parent(Left(Z)) = Y;
 			Left(Y) = Left(Z);
 			if (Y == Right(Z))
 				Xpar = Y;
@@ -80,7 +80,7 @@ namespace ft
 			Parent(Y) = Parent(Z);
 			std::swap(Color(Y), Color(Z));
 		}
-		if (Color(Z) == Black)
+		if (Color(Z) == Black) //check that we didn't disbalance our tree (erase-fixup)
 		{
 			for (; X != Root() && Color(X) == Black; Xpar = Parent(X))
 			{

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #ifndef RAN_ITER_H
-#define RAN_ITER_H
+# define RAN_ITER_H
 
 #include "iterator.h"
 
@@ -30,24 +30,25 @@ namespace ft
 										Ptr_const, Ref_const>	RanIt;
 		random_access_iterator()
 		{
-
 		}
 		explicit random_access_iterator(const Ptr& p): current(p)
 		{
-
 		}
-		explicit random_access_iterator
+		random_access_iterator
 			(const random_access_iterator <Type, Dist, Ptr, Ref,
-											Ptr_const, Ref_const>& other):
-			current(other.base)
+											Ptr_const, Ref_const>& other)
+			: current(other.base)
 		{
-
 		}
 
 		~random_access_iterator()
 		{
-
 		}
+		typedef random_access_iterator<Type, Dist, Ptr, Ref,
+			Ptr_const, Ref_const>								iterator;
+		typedef typename iterator::distance_type				difference_type;
+		typedef typename iterator::pointer 						pointer;
+		typedef typename iterator::reference 					reference;
 
 		inline Ptr base() const
 		{
@@ -57,7 +58,7 @@ namespace ft
 		inline random_access_iterator& operator=(const RanIt& ref)
 		{
 			if (this != ref)
-				this->current = ref->current;
+				current = ref->current;
 			return *this;
 		}
 
@@ -66,12 +67,96 @@ namespace ft
 			return *current;
 		}
 
-		inline const Ref operator*() const
+		inline Ref operator*() const
 		{
 			return *current;
 		}
 
+		inline random_access_iterator& operator+= (difference_type n) {
+			current += n;
+			return *this;
+		}
+
+		inline iterator& operator++ () {
+			current++;
+			return *this;
+		}
+
+		inline iterator operator++ (int) {
+			iterator temp = *this;
+			++current;
+			return temp;
+		}
+
+		inline iterator operator+ (difference_type n) {
+			iterator temp = *this;
+			return (temp += n);
+		}
+
+		inline iterator& operator-= (difference_type n) {
+			current -= n;
+			return *this;
+		}
+
+		inline iterator& operator-- () {
+			--current;
+			return *this;
+		}
+
+		inline iterator operator-- (int) {
+			iterator temp = *this;
+			current--;
+			return temp;
+		}
+
+		inline iterator operator- (difference_type n) const {
+			iterator temp = *this;
+			return (temp -= n);
+		}
+
+		inline difference_type operator- (const iterator& a) const {
+			return (current - a.current);
+		}
+
+		inline reference operator[] (Dist n) const {
+			return *(current + n);
+		}
+
+		inline bool operator< (const iterator& b) const {
+			return (current < b.current);
+		}
+
+		inline bool operator> (const iterator& b) const {
+			return (current > b.current);
+		}
+
+		inline bool operator<= (const iterator& b) const {
+			return (current <= b.current);
+		}
+
+		inline bool operator>= (const iterator& b) const {
+			return (current >= b.current);
+		}
+
+		inline bool operator== (const iterator& b) const {
+			return (current == b.current);
+		}
+
+		inline bool operator!= (const iterator& b) const {
+			return (current != b.current);
+		}
+
 	};
+
+	template<class Type, class Dist, class Ptr, class Ref,
+			class Ptr_const, class Ref_const> inline
+	random_access_iterator<Type, Dist, Ptr, Ref, Ptr_const, Ref_const>
+	        operator+ (Dist n,
+					const random_access_iterator<Type, Dist, Ptr, Ref, Ptr_const, Ref_const>& y)
+	{
+		return (y + n);
+	}
+
 }
 
 #endif

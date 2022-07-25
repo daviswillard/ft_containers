@@ -33,4 +33,11 @@ add_executable(ft_containers
         include/core.h
         include/xtree/TreeIterator.h
         test_set.cpp
-        include/algorithm/mismatch.h include/xtree/TreeInsert.h include/xtree/TreeErase.h include/xtree/TreeCopy.h include/xtree/TreeCIterator.h include/map/map_traits.h)
+        include/algorithm/mismatch.h
+        include/xtree/TreeInsert.h
+        include/xtree/TreeErase.h
+        include/xtree/TreeCopy.h
+        include/xtree/TreeCIterator.h
+        include/map/map_traits.h
+        include/vector/vector.h
+        include/vector/base_vec.h include/vector/protected_vec.h include/vector/constructors_vec.h)

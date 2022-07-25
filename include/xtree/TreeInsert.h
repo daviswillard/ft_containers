@@ -66,7 +66,8 @@ namespace ft
 		{
 			iterator	Pb = P;
 			if (TreeTraits::comp(Key((--Pb).Mynode()), TreeTraits::GetKey(V))
-				&& TreeTraits::comp(TreeTraits::GetKey(V), Key(P.Mynode()))) {
+				&& TreeTraits::comp(TreeTraits::GetKey(V), Key(P.Mynode())))
+			{
 				if (Isnil(Right(Pb.Mynode())))
 					return Insert(false, Pb.Mynode(), V);
 				else
@@ -78,7 +79,8 @@ namespace ft
 
 	template <class TreeTraits>
 	typename Tree<TreeTraits>::iterator ft::Tree<TreeTraits>::Insert(bool Addleft, Nodeptr Y,
-					const value_type &V) {
+																	const value_type &V)
+	{
 		if (max_size() - 1 <= Size)
 			throw std::length_error("map/set<T> too long");
 		Nodeptr Z = Buynode(Y, Red);    //create new node that we insert. Y is considered its parent node
@@ -93,27 +95,35 @@ namespace ft
 		if (Y == Head) {
 			Root() = Z;
 			Lmost() = Z, Rmost() = Z;
-		} else if (Addleft) //check whether to add it to the left of node Y or not
+		}
+		else if (Addleft) //check whether to add it to the left of node Y or not
 		{
 			Left(Y) = Z;
 			if (Y == Lmost())
 				Lmost() = Z;
-		} else {
+		}
+		else
+		{
 			Right(Y) = Z;
 			if (Y == Rmost())
 				Rmost() = Z;
 		}
-		for (Nodeptr X = Z; Color(Parent(X)) == Red;) //check that we didn't disbalance our tree
+		for (Nodeptr X = Z; Color(Parent(X)) == Red;) //check that we didn't disbalance our tree (insert-fixup)
 		{
-			if (Parent(X) == Left(Parent(Parent(X)))) {
+			if (Parent(X) == Left(Parent(Parent(X))))
+			{
 				Y = Right(Parent(Parent(X)));
-				if (Color(Y) == Red) {
+				if (Color(Y) == Red)
+				{
 					Color(Parent(X)) = Black;
 					Color(Y) = Black;
 					Color(Parent(Parent(X))) = Red;
 					X = Parent(Parent(X));
-				} else {
-					if (X == Right(Parent(X))) {
+				}
+				else
+				{
+					if (X == Right(Parent(X)))
+					{
 						X = Parent(X);
 						Lrotate(X);
 					}
@@ -121,15 +131,21 @@ namespace ft
 					Color(Parent(Parent(X))) = Red;
 					Rrotate(Parent(Parent(X)));
 				}
-			} else {
+			}
+			else
+			{
 				Y = Left(Parent(Parent(X))); // 1
-				if (Color(Y) == Red) {
+				if (Color(Y) == Red)
+				{
 					Color(Parent(X)) = Black;
 					Color(Y) = Black;
 					Color(Parent(Parent(X))) = Red;
 					X = Parent(Parent(X));
-				} else {
-					if (X == Left(Parent(X))) {
+				}
+				else
+				{
+					if (X == Left(Parent(X)))
+					{
 						X = Parent(X);
 						Rrotate(X);
 					}
