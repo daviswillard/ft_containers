@@ -22,5 +22,6 @@
 #include "adv_dist.h"
 #include "reverse_iterator.h"
 #include "random_access_iterator.h"
+#include "dist_type.h"
 
 #endif

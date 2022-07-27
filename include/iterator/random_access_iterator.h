@@ -13,8 +13,6 @@
 #ifndef RAN_ITER_H
 # define RAN_ITER_H
 
-#include "iterator.h"
-
 namespace ft
 {
 	template	<class Type, class Dist, class Ptr, class Ref,
@@ -37,7 +35,7 @@ namespace ft
 		random_access_iterator
 			(const random_access_iterator <Type, Dist, Ptr, Ref,
 											Ptr_const, Ref_const>& other)
-			: current(other.base)
+			: current(other.base())
 		{
 		}
 
@@ -57,8 +55,8 @@ namespace ft
 
 		inline random_access_iterator& operator=(const RanIt& ref)
 		{
-			if (this != ref)
-				current = ref->current;
+			if (this != &ref)
+				current = ref.current;
 			return *this;
 		}
 

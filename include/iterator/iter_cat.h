@@ -20,18 +20,19 @@
 
 namespace ft
 {
-	template <class C, class T, class Dist>
-		inline
-		C Iter_cat(const ft::iterator<C, T, Dist>& iter)
-		{
-			C x;
-			return x;
-		}
+	template <class C, class T, class Dist> inline
+	C Iter_cat(const ft::iterator<C, T, Dist>& iter)
+	{
+		C x;
+		return x;
+	}
+
 	template <class T> inline
-		random_access_iterator_tag Iter_cat (const T *) {
-			random_access_iterator_tag x;
-			return x;
-		}
+	random_access_iterator_tag Iter_cat (const T)
+	{
+		random_access_iterator_tag x;
+		return x;
+	}
 
 
 /*Overloaded Iter_cat functions helpful in vector implementation*/

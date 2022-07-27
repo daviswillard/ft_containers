@@ -40,4 +40,9 @@ add_executable(ft_containers
         include/xtree/TreeCIterator.h
         include/map/map_traits.h
         include/vector/vector.h
-        include/vector/base_vec.h include/vector/protected_vec.h include/vector/constructors_vec.h)
+        include/vector/base_vec.h
+        include/vector/protected_vec.h
+        include/vector/constructors_vec.h
+        include/vector/funcs.h
+        include/vector/sequence_access.h
+        include/vector/template_functions.h include/algorithm/fill.h)

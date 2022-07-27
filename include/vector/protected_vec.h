@@ -2,6 +2,8 @@
 # define PROTECTED_VEC_H
 
 # include "base_vec.h"
+# include "../algorithm/equal.h"
+# include "../algorithm/lexicographical_compare.h"
 
 namespace ft
 {
@@ -85,6 +87,18 @@ namespace ft
 	void	vector<T, Alloc>::Xran() const
 	{
 		throw std::out_of_range("vector<T> subscript");
+	}
+
+	template <class T, class Alloc>
+	bool	vector<T, Alloc>::Eq(const Myt& X) const
+	{
+		return size() == X.size() && equal(begin(), end(), X.begin());
+	}
+
+	template <class T, class Alloc>
+	bool	vector<T, Alloc>::Lt(const Myt& X) const
+	{
+		return lexicographical_compare(begin(), end(), X.begin(), X.end());
 	}
 }
 

@@ -20,21 +20,39 @@
 
 namespace ft
 {
-	template <class RanIt>
-		inline
-		void advance(RanIt& iter,
-				typename ft::iterator_traits<RanIt>::difference_type N, random_access_iterator_tag)
-		{
-			iter += N;
-		}
+	template<class InIt, class Distance> inline
+	void	advance(InIt& I, Distance N) {
+		Advance(I, N, Iter_cat(I));
+	}
 
-	template <class RanIt>
-		inline
-		typename ft::iterator_traits<RanIt>::difference_type
-		distance(RanIt _first, RanIt _last, random_access_iterator_tag)
-		{
-			return _last - _first;
+	template<class InIt, class Distance> inline
+	void	Advance(InIt& iterator, Distance n, input_iterator_tag) {
+		while (n-- > 0) {
+			++iterator;
 		}
+	}
+
+	template<class FwdIt, class Distance> inline
+	void	Advance(FwdIt& iterator, Distance n, forward_iterator_tag) {
+		while (n-- > 0) {
+			++iterator;
+		}
+	}
+
+	template<class BidIt, class Distance> inline
+	void	Advance(BidIt& iterator, Distance n, bidirectional_iterator_tag) {
+		while (n-- > 0) {
+			++iterator;
+		}
+		while (n++ < 0) {
+			--iterator;
+		}
+	}
+
+	template<class RanIt, class Distance> inline
+	void	Advance(RanIt& iterator, Distance n, random_access_iterator_tag) {
+		iterator += n;
+	}
 
 	template <class It, class D> inline
 	void distance_tree(It F, It L, D & N)
