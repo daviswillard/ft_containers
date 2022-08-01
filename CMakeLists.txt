@@ -45,4 +45,5 @@ add_executable(ft_containers
         include/vector/constructors_vec.h
         include/vector/funcs.h
         include/vector/sequence_access.h
-        include/vector/template_functions.h include/algorithm/fill.h)
+        include/vector/template_functions.h
+        include/algorithm/fill.h)

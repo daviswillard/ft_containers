@@ -22,7 +22,7 @@ namespace ft
 		class reverse_iterator : public iterator<
 				typename ft::iterator_traits<RanIt>::iterator_category,
 				typename ft::iterator_traits<RanIt>::value_type,
-				typename ft::iterator_traits<RanIt>::distance_type,
+				typename ft::iterator_traits<RanIt>::difference_type,
 				typename ft::iterator_traits<RanIt>::pointer,
 				typename ft::iterator_traits<RanIt>::reference>
 	{
@@ -30,7 +30,7 @@ namespace ft
 		RanIt current;
 	public:
 		typedef RanIt													iterator_type;
-			typedef typename ft::iterator_traits<RanIt>::distance_type	distance_type;
+			typedef typename ft::iterator_traits<RanIt>::difference_type	distance_type;
 		typedef typename ft::iterator_traits<RanIt>::reference			reference;
 		typedef typename ft::iterator_traits<RanIt>::pointer			pointer;
 

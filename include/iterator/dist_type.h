@@ -20,7 +20,7 @@ namespace ft
 	/*These functions return a pointer to type T, instead of and object of type T*/
 
 	template <class It> inline
-	typename ft::iterator_traits<It>::distance_type* Dist_type(It)
+	typename ft::iterator_traits<It>::difference_type* Dist_type(It)
 	{
 		return 0;
 	}

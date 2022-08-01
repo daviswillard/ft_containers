@@ -26,6 +26,6 @@ namespace ft
 		inline bool equal(InIt1 first, InIt1 last,
 		InIt2 ref, BinaryPredicate p)
 	{
-		return ft::mismatch(first, last, ref).first == last;
+		return ft::mismatch(first, last, ref, p).first == last;
 	}
 }

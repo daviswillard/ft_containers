@@ -44,7 +44,7 @@ namespace ft
 		}
 		typedef random_access_iterator<Type, Dist, Ptr, Ref,
 			Ptr_const, Ref_const>								iterator;
-		typedef typename iterator::distance_type				difference_type;
+		typedef typename iterator::difference_type				difference_type;
 		typedef typename iterator::pointer 						pointer;
 		typedef typename iterator::reference 					reference;
 

@@ -60,7 +60,7 @@ namespace ft
 				Dift, Ctptr, const_reference>			Mybase;
 		typedef typename Mybase::iterator_category		iterator_category;
 //			typedef typename Mybase::value_type				value_type;
-		typedef typename Mybase::distance_type			distance_type;
+		typedef typename Mybase::difference_type			difference_type;
 		typedef typename Mybase::pointer				pointer;
 		typedef typename Mybase::reference				reference;
 

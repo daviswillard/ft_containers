@@ -21,7 +21,7 @@
 namespace ft
 {
 	template <class C, class T, class Dist> inline
-	C Iter_cat(const ft::iterator<C, T, Dist>& iter)
+	C Iter_cat(const ft::iterator<C, T, Dist>&)
 	{
 		C x;
 		return x;
