@@ -1,7 +1,7 @@
-#include "include/set/set.h"
-#include "include/map/map.h"
-#include "include/vector/vector.h"
-#include "stack/stack.hpp"
+#include "include/set/set.hpp"
+#include "include/map/map.hpp"
+#include "include/vector/vector.hpp"
+#include "include/stack/stack.hpp"
 
 #include <iostream>
 #include <cassert>
