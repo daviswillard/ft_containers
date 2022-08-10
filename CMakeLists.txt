@@ -50,4 +50,11 @@ add_executable(ft_containers
         include/vector/funcs.h
         include/vector/sequence_access.h
         include/vector/template_functions.h
-        include/algorithm/fill.h)
+        include/algorithm/fill.h
+        include/stack/stack.hpp
+        include/stack/stack_capacity.hpp
+        include/stack/stack_element_access.hpp
+        include/stack/stack_member_functions.hpp
+        include/stack/stack_modifiers.hpp
+        include/stack/stack_non_member_functions.hpp
+        )

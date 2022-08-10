@@ -1,11 +1,23 @@
 #include "include/set/set.h"
 #include "include/map/map.h"
 #include "include/vector/vector.h"
+#include "stack/stack.hpp"
 
 #include <iostream>
 #include <cassert>
 #include <algorithm>
-#include <vector>
+
+void test_stack()
+{
+	ft::stack<int> stack;
+	ft::stack<int> stack1;
+
+	assert(stack1.empty());
+	for (int i = 0; i < 30; i++)
+		stack1.push(i);
+	assert(!stack1.empty());
+	assert(stack1.size() == 30);
+}
 
 void	test_vec()
 {
@@ -361,6 +373,9 @@ int main()
 
 	test_vec();
 	std::cout << "SUCCESS testing <vector>" << std::endl;
+
+	test_stack();
+	std::cout << "SUCCESS testing <stack>" << std::endl;
 
     return 0;
 }
