@@ -15,7 +15,7 @@
 
 #include <algorithm>
 #include <memory>
-#include "../utility/pair.hpp"
+#include "../utility/utility.hpp"
 #include "../xtree/tree.hpp"
 #include "set_traits.hpp"
 

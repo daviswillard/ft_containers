@@ -17,9 +17,10 @@ namespace ft
 
 	// assigns values to the container adaptor
 	template<class T, class Container>
-	typename ft::stack<T, Container>& stack<T, Container>::operator=(const stack& other)
+	ft::stack<T, Container>& stack<T, Container>::operator=(const stack& other)
 	{
-		container = other;
+		container = other.container;
+		return *this;
 	}
 }
 

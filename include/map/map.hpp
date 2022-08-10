@@ -15,6 +15,7 @@
 
 #include <memory>
 #include <algorithm>
+#include "../utility/utility.hpp"
 #include "map_traits.hpp"
 #include "../xtree/tree.hpp"
 

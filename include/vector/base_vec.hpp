@@ -1,5 +1,5 @@
 #ifndef BASE_VEC_HPP
-#define BASE_VEC_HPP
+# define BASE_VEC_HPP
 
 # include <memory>
 # include <stdexcept>
@@ -147,7 +147,7 @@ namespace ft
 	template<class T, class allocator_type> inline
 	bool operator==(const vector<T, allocator_type>& X, const vector<T, allocator_type>& Y)
 	{
-		return (X.size() == Y.size() && ft::equal(X.begin(), X.end(), Y.begin()));
+		return (X.size() == Y.size() && equal(X.begin(), X.end(), Y.begin()));
 	}
 
 	template<class T, class allocator_type> inline
@@ -159,7 +159,7 @@ namespace ft
 	template<class T, class allocator_type> inline
 	bool operator<(const vector<T, allocator_type>& X, const vector<T, allocator_type>& Y)
 	{
-		return (ft::lexicographical_compare(X.begin(), X.end(), Y.begin(), Y.end()));
+		return (lexicographical_compare(X.begin(), X.end(), Y.begin(), Y.end()));
 	}
 
 	template<class T, class allocator_type> inline
