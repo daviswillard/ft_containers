@@ -8,49 +8,49 @@ include_directories(include)
 include_directories(include/algorithm)
 include_directories(include/iterator)
 include_directories(include/map)
-include_directories(include/utils)
+include_directories(include/utility)
 include_directories(include/set)
 include_directories(include/xtree)
 include_directories(include/stack)
 
 add_executable(ft_containers
-        include/functional/binary_function.h
-        include/functional/less.h
-        include/algorithm/equal.h
-        include/algorithm/lexicographical_compare.h
-        include/iterator/adv_dist.h
-        include/iterator/base.h
-        include/iterator/dist_type.h
-        include/iterator/insert_iterator.h
-        include/iterator/inserter.h
-        include/iterator/iter_cat.h
-        include/iterator/iterator.h
-        include/iterator/iterator_tag.h
-        include/iterator/iterator_traits.h
-        include/iterator/random_access_iterator.h
-        include/iterator/reverse_iterator.h
-        include/iterator/val_type.h
-        include/map/map.h
-        include/utils/enable_if.h
-        include/utils/integral_constant.h
-        include/utils/pair.h
-        include/utils/utils.h
-        include/xtree/TreeIterator.h
+        include/functional/binary_function.hpp
+        include/functional/less.hpp
+        include/algorithm/equal.hpp
+        include/algorithm/lexicographical_compare.hpp
+        include/iterator/adv_dist.hpp
+        include/iterator/base.hpp
+        include/iterator/dist_type.hpp
+        include/iterator/insert_iterator.hpp
+        include/iterator/inserter.hpp
+        include/iterator/iter_cat.hpp
+        include/iterator/iterator.hpp
+        include/iterator/iterator_tag.hpp
+        include/iterator/iterator_traits.hpp
+        include/iterator/random_access_iterator.hpp
+        include/iterator/reverse_iterator.hpp
+        include/iterator/val_type.hpp
+        include/map/map.hpp
+        include/utility/enable_if.hpp
+        include/utility/integral_constant.hpp
+        include/utility/pair.hpp
+        include/utility/utility.hpp
+        include/xtree/TreeIterator.hpp
         test_set.cpp
-        include/algorithm/mismatch.h
-        include/xtree/TreeInsert.h
-        include/xtree/TreeErase.h
-        include/xtree/TreeCopy.h
-        include/xtree/TreeCIterator.h
-        include/map/map_traits.h
-        include/vector/vector.h
-        include/vector/base_vec.h
-        include/vector/protected_vec.h
-        include/vector/constructors_vec.h
-        include/vector/funcs.h
-        include/vector/sequence_access.h
-        include/vector/template_functions.h
-        include/algorithm/fill.h
+        include/algorithm/mismatch.hpp
+        include/xtree/TreeInsert.hpp
+        include/xtree/TreeErase.hpp
+        include/xtree/TreeCopy.hpp
+        include/xtree/TreeCIterator.hpp
+        include/map/map_traits.hpp
+        include/vector/vector.hpp
+        include/vector/base_vec.hpp
+        include/vector/protected_vec.hpp
+        include/vector/constructors_vec.hpp
+        include/vector/funcs.hpp
+        include/vector/sequence_access.hpp
+        include/vector/template_functions.hpp
+        include/algorithm/fill.hpp
         include/stack/stack.hpp
         include/stack/stack_capacity.hpp
         include/stack/stack_element_access.hpp
