@@ -15,7 +15,7 @@ namespace ft
 			return false;
 		else
 		{
-			First = Mybase::Alval.allocate(N, nullptr);
+			First = Mybase::Alval.allocate(N, NULL);
 			Last = First;
 			End = First + N;
 			return true;

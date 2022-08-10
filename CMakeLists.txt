@@ -9,8 +9,13 @@ include_directories(include/algorithm)
 include_directories(include/iterator)
 include_directories(include/map)
 include_directories(include/utils)
+include_directories(include/set)
+include_directories(include/xtree)
+include_directories(include/stack)
 
 add_executable(ft_containers
+        include/functional/binary_function.h
+        include/functional/less.h
         include/algorithm/equal.h
         include/algorithm/lexicographical_compare.h
         include/iterator/adv_dist.h
@@ -30,7 +35,6 @@ add_executable(ft_containers
         include/utils/integral_constant.h
         include/utils/pair.h
         include/utils/utils.h
-        include/core.h
         include/xtree/TreeIterator.h
         test_set.cpp
         include/algorithm/mismatch.h

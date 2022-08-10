@@ -19,26 +19,26 @@ namespace ft
 
 	template <typename T, class Al>
 	typename vector<T, Al>::reference vector<T, Al>::at(size_type n) {
-		if (n >= (u_int64_t)(Last - First))
-			throw std::out_of_range("vector");
+		if (n >= size())
+			Xran();
 		return (*(begin() + n));
 	}
 
 	template <typename T, class Al>
 	typename vector<T, Al>::const_reference vector<T, Al>::at(size_type n) const {
-		if (n >= Last - First)
-			throw std::out_of_range("vector");
+		if (n >= size())
+			Xran();
 		return (*(begin() + n));
 	}
 
 	template <typename T, class Al>
 	typename vector<T, Al>::reference vector<T, Al>::front() {
-		return *(begin());
+		return *begin();
 	}
 
 	template <typename T, class Al>
 	typename vector<T, Al>::const_reference vector<T, Al>::front() const {
-		return *(begin());
+		return *begin();
 	}
 
 	template <typename T, class Al>
@@ -70,16 +70,17 @@ namespace ft
 		if (M == 0) {
 			;
 		}
-		else if (M > max_size() - size())
+		else if (max_size() - size() < M)
 		{
 			Xlen();
 		}
 		else if (N < size() + M)
 		{
-			N = max_size() - N / 2 < N ? 0 : N + N / 2;
+			N = (max_size() - N / 2 < N) ? 0
+					: N + N / 2;
 			if (N < size() + M)
 				N = size() + M;
-			pointer new_first = Mybase::Alval.allocate(N, nullptr);
+			pointer new_first = Mybase::Alval.allocate(N,  NULL);
 			pointer new_last;
 			try
 			{
@@ -95,11 +96,12 @@ namespace ft
 			}
 			if (First)
 			{
-				Clear();
+				Destroy(First, Last);
+				Mybase::Alval.deallocate(First, End - First);
 			}
-			First = new_first;
-			Last = new_first + size() + M;
 			End = new_first + N;
+			Last = new_first + size() + M;
+			First = new_first;
 		}
 		else if ((size_type) (end() - P) < M)
 		{
@@ -131,7 +133,7 @@ namespace ft
 		Insert(P, F, L, Iter_cat(F));
 	}
 
-// Removes the element at P
+// Removes element at P
 	template <typename T, class Al>
 	typename vector<T, Al>::iterator vector<T, Al>::erase(iterator P) {
 		std::copy(P + 1, end(), P);
@@ -141,10 +143,11 @@ namespace ft
 	}
 
 
-// Removes the elements in the range
+// Removes elements in the range
 	template <typename T, class Al>
 	typename vector<T, Al>::iterator vector<T, Al>::erase(iterator F, iterator L) {
-		if (F != L) {
+		if (F != L)
+		{
 			pointer new_last = std::copy(L, end(), F.base());
 			Destroy(new_last, Last);
 			Last = new_last;
@@ -163,15 +166,18 @@ namespace ft
 	}
 
 	template <typename T, class Al>
-	void vector<T, Al>::swap(vector& X) {
-		if (Mybase::Alval == X.Alval) {
+	void vector<T, Al>::swap(vector& X)
+	{
+		if (Mybase::Alval == X.Alval)
+		{
 			std::swap(First, X.First);
 			std::swap(Last, X.Last);
 			std::swap(End, X.End);
-		} else {
+		}
+		else
+		{
 			Myt temp = *this;
-			*this = X;
-			X = temp;
+			*this = X, X = temp;
 		}
 	}
 
@@ -232,16 +238,16 @@ namespace ft
 		{
 			;
 		}
-		else if (M > max_size() - size())
+		else if (max_size() - size() < M)
 		{
-			throw std::length_error("vector");
+			Xlen();
 		}
 		else if (size() + M > N)
 		{
-			N = max_size() - N / 2 < N ? 0 : N * 2;
+			N = max_size() - N / 2 < N ? 0 : N / 2;
 			if (N < size() + M)
 				N = size() + M;
-			pointer new_first = Mybase::Alval.allocate(N, nullptr);
+			pointer new_first = Mybase::Alval.allocate(N,  NULL);
 			pointer new_last;
 			try
 			{
@@ -257,7 +263,8 @@ namespace ft
 			}
 			if (First)
 			{
-				Clear();
+				Destroy(First, Last);
+				Mybase::Alval.deallocate(First, End - First);
 			}
 			End = new_first + N;
 			Last = new_first + size() + M;

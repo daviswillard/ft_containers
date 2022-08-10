@@ -428,8 +428,8 @@ namespace ft
 		Nodeptr	Buynode(Nodeptr Parg, char Carg)
 		{
 			Nodeptr S = this->Alnod.allocate(1);
-			this->Alptr.construct(&Left(S), nullptr);
-			this->Alptr.construct(&Right(S), nullptr);
+			this->Alptr.construct(&Left(S), NULL);
+			this->Alptr.construct(&Right(S), NULL);
 			this->Alptr.construct(&Parent(S), Parg);
 			Color(S) = Carg;
 			Isnil(S) = false;

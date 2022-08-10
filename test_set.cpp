@@ -5,6 +5,7 @@
 #include <iostream>
 #include <cassert>
 #include <algorithm>
+#include <vector>
 
 void	test_vec()
 {
@@ -59,7 +60,6 @@ void	test_vec()
 
 	/* Создали вектор на основе итераторов*/
 	ft::vector<char> v3(v1a.begin(), v1a.end());
-	std::cout << (int)v3.size() << std::endl;
 	assert(v3.size() == 6 && v3.front() =='x');
 
 	/* Создали константный вектор на итераторов*/
@@ -144,8 +144,7 @@ void	test_vec()
 	pair.insert(pair.begin(), ft::make_pair(4, 'a'));
 
 	ft::vector<ft::pair<int, char>, std::allocator<ft::pair<int, char> > >::iterator itp(pair.begin());
-
-//	assert(itp->first == 4 && itp->second == 'a') ;
+	assert(itp->first == 4 && itp->second == 'a') ;
 }
 
 void test_set()
@@ -354,15 +353,14 @@ void test_map()
 
 int main()
 {
-//    test_set();
-//    std::cout << "SUCCESS testing <set>" << std::endl;
-//
-//	test_map();
-//	std::cout << "SUCCESS testing <map>" << std::endl;
+    test_set();
+    std::cout << "SUCCESS testing <set>" << std::endl;
+
+	test_map();
+	std::cout << "SUCCESS testing <map>" << std::endl;
 
 	test_vec();
 	std::cout << "SUCCESS testing <vector>" << std::endl;
-
 
     return 0;
 }

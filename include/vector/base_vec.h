@@ -15,7 +15,7 @@ namespace ft
 		{
 		}
 		typedef typename A::template rebind<T>::
-				other Alty;
+		other Alty;
 		Alty Alval;
 	};
 
@@ -52,17 +52,12 @@ namespace ft
 		vector(size_type N, const T& V, const A& Al);
 		vector(const Myt& X);
 
+
 		template <class It>
 		vector(It First, It Last);
 
 		template <class It>
 		vector(It First, It Last, const A& Al);
-
-		template <class It>
-		void	Construct(It First, It Last, Int_iterator_tag);
-
-		template<class It>
-		void	Construct(It First, It Last, input_iterator_tag);
 
 		~vector();
 		Myt&					operator= (const Myt& rhs);
@@ -85,10 +80,10 @@ namespace ft
 		bool 					empty() const;
 
 		A 						get_allocator() const;
-		const_reference			at(size_type P) const;
-		reference 				at(size_type P);
-		const_reference			operator[](size_type P) const;
-		reference				operator[](size_type P);
+		const_reference			at(size_type n) const;
+		reference 				at(size_type n);
+		const_reference			operator[](size_type n) const;
+		reference				operator[](size_type n);
 		reference				front();
 		const_reference			front() const;
 		reference				back();
@@ -97,38 +92,46 @@ namespace ft
 		void					pop_back();
 
 		template<class It>
-				void			assign(It First, It Last);
-		template<class It>
-				void			Assign(It First, It Last, Int_iterator_tag);
-		template<class It>
-				void			Assign(It First, It Last, input_iterator_tag);
+		void					assign(It First, It Last);
 		void					assign(size_type N, const T& X);
 
 		iterator				insert(iterator P, const T& X);
 		void					insert(iterator P, size_type M, const T& X);
 		template <class It>
-				void			insert(iterator P, It First, It Last);
-		template <class It>
-				void			Insert(iterator P, It First, It Last, Int_iterator_tag);
-		template <class It>
-				void			Insert(iterator P, It First, It Last, input_iterator_tag);
-		template <class It>
-				void			Insert(iterator P, It First, It Last, forward_iterator_tag);
+		void					insert(iterator P, It First, It Last);
 
 		iterator				erase(iterator P);
 		iterator				erase(iterator First, iterator Last);
 		void					clear();
 
-		bool 					Eq(const Myt& X) const;
-		bool					Lt(const Myt& X) const;
 		void					swap(Myt& X);
-
 		void 					swap(const vector &X, const vector& Y);
 
 	protected:
+		template <class It>
+		void	Construct(It First, It Last, Int_iterator_tag);
+
+		template<class It>
+		void	Construct(It First, It Last, input_iterator_tag);
+
+		template <class It>
+		void	Insert(iterator P, It First, It Last, Int_iterator_tag);
+		template <class It>
+		void	Insert(iterator P, It First, It Last, input_iterator_tag);
+		template <class It>
+		void	Insert(iterator P, It First, It Last, forward_iterator_tag);
+
 		bool	Buy(size_type N);
 		void	Clear();
 		void	Destroy(pointer First, pointer Last);
+
+		template<class It>
+		void	Assign(It First, It Last, Int_iterator_tag);
+		template<class It>
+		void	Assign(It First, It Last, input_iterator_tag);
+
+		bool 	Eq(const Myt& X) const;
+		bool	Lt(const Myt& X) const;
 
 		template <class It>
 		pointer Ucopy(It First, It Last, pointer Q);

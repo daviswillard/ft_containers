@@ -38,26 +38,26 @@ namespace ft
 	void	vector<T, Al>::reserve(size_type N)
 	{
 		if (max_size() < N)
-		Xlen();
+			Xlen();
 		else if (capacity() < N)
 		{
-			pointer Q = Mybase::Alval.allocate(N, nullptr);
+			pointer Q = Mybase::Alval.allocate(N,  NULL);
 			try
-		{
-			Ucopy(begin(), end(), Q);
-		}
-		catch (...)
-		{
-		Mybase::Alval.deallocate(Q, N);
-		throw;
-		}
-		if (First != 0)
-		{
-		Destroy(First, Last);
-		Mybase::Alval.deallocate(First, End - First);
-		}
-		End = Q + N;
-		Last = Q + size();
+			{
+				Ucopy(begin(), end(), Q);
+			}
+			catch (...)
+			{
+				Mybase::Alval.deallocate(Q, N);
+				throw;
+			}
+			if (First != 0)
+			{
+				Destroy(First, Last);
+				Mybase::Alval.deallocate(First, End - First);
+			}
+			End = Q + N;
+			Last = Q + size();
 			First = Q;
 		}
 	}
@@ -126,9 +126,9 @@ namespace ft
 	void	vector<T, Al>::resize(typename vector<T, Al>::size_type N, T X)
 	{
 		if (size() < N)
-			insert (end(), N - size(), X);
+			insert(end(), N - size(), X);
 		else if (N < size())
-			erase (begin() + N, end());
+			erase(begin() + N, end());
 	}
 
 	template <class T, class Al>

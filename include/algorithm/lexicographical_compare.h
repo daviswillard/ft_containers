@@ -18,7 +18,7 @@ namespace ft
     inline bool lexicographical_compare(InIt1 first, InIt1 last,
                                         InIt2 _first, InIt2 _last)
     {
-        for (; _first != _last; ++first, ++_first)
+        for (; _first != _last && first != last; ++first, ++_first)
         {
             if (*first < *_first)
                 return true;
@@ -32,7 +32,7 @@ namespace ft
     inline bool lexicographical_compare(InIt1 first, InIt1 last,
                                         InIt2 _first, InIt2 _last, Compare p)
     {
-        for (; _first != _last; ++first, ++_first)
+        for (; _first != _last && first != last; ++first, ++_first)
         {
             if (p(*first, *_first))
                 return true;

@@ -20,23 +20,20 @@ namespace ft
  * it allows comparing two objects of identical types
 */
 	template <class T1, class T2>
-		struct pair
-		{
-			typedef T1 first_type;
-			typedef T2 second_type;
+	struct pair
+	{
+		typedef T1 first_type;
+		typedef T2 second_type;
 
 //	Constructors of class pair
 
-			pair (): first(T1()), second(T2()) {}
-			pair (const T1& value1, const T2& value2): first(value1), second(value2) {}
-			template<class U1, class U2>
-				pair (const pair<U1, U2>& X): first(X.first), second(X.second) {}
-			T1 first;
-			T2 second;
-		};
-
-
-
+		pair (): first(T1()), second(T2()) {}
+		pair (const T1& value1, const T2& value2): first(value1), second(value2) {}
+		template<class U1, class U2>
+		explicit pair (const pair<U1, U2>& X): first(X.first), second(X.second) {}
+		T1 first;
+		T2 second;
+	};
 
 //Operators of class pair
 

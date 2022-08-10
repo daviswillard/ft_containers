@@ -24,18 +24,17 @@ namespace ft
 	protected:
 		Ptr	current;
 	public:
-		typedef	random_access_iterator<	Type, Dist, Ptr, Ref,
+		typedef	random_access_iterator<Type, Dist, Ptr, Ref,
 										Ptr_const, Ref_const>	RanIt;
+
 		random_access_iterator()
 		{
 		}
 		explicit random_access_iterator(const Ptr& p): current(p)
 		{
 		}
-		random_access_iterator
-			(const random_access_iterator <Type, Dist, Ptr, Ref,
-											Ptr_const, Ref_const>& other)
-			: current(other.base())
+		random_access_iterator(const RanIt& other)
+		: current(other.base())
 		{
 		}
 
@@ -68,6 +67,11 @@ namespace ft
 		inline Ref operator*() const
 		{
 			return *current;
+		}
+
+		inline Ptr operator->() const
+		{
+			return &**this;
 		}
 
 		inline random_access_iterator& operator+= (difference_type n) {

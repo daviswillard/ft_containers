@@ -54,15 +54,6 @@ namespace ft
 		iterator += n;
 	}
 
-	template <class It, class D> inline
-	void distance_tree(It F, It L, D & N)
-	{
-		for (; F != L; ++F)
-		{
-			++N;
-		}
-	}
-
 }
 
 #endif
