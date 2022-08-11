@@ -15,7 +15,11 @@ namespace ft
 			return false;
 		else
 		{
+#if defined (__linux__) && defined (__GNUC__)
 			First = Mybase::Alval.allocate(N, NULL);
+#elif defined (__APPLE__) && defined (__clang__)
+			First = Mybase::Alval.allocate(N, nullptr);
+#endif
 			Last = First;
 			End = First + N;
 			return true;

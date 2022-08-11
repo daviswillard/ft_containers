@@ -57,4 +57,4 @@ add_executable(ft_containers
         include/stack/stack_member_functions.hpp
         include/stack/stack_modifiers.hpp
         include/stack/stack_non_member_functions.hpp
-        )
+        include/stack/stack_protected.hpp)
