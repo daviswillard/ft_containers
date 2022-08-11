@@ -26,45 +26,48 @@ namespace ft
 				typename ft::iterator_traits<RanIt>::pointer,
 				typename ft::iterator_traits<RanIt>::reference>
 	{
-	protected:
-		RanIt current;
 	public:
+		typedef reverse_iterator<RanIt>									Myt;
 		typedef RanIt													iterator_type;
-			typedef typename ft::iterator_traits<RanIt>::difference_type	distance_type;
+		typedef typename ft::iterator_traits<RanIt>::difference_type	Diff;
 		typedef typename ft::iterator_traits<RanIt>::reference			reference;
 		typedef typename ft::iterator_traits<RanIt>::pointer			pointer;
 
 		/*Default constructor, copy constructors*/
 
-		reverse_iterator() : current() {}
-		explicit reverse_iterator(RanIt _x) : current(_x) {}
+		reverse_iterator()
+		{
+		}
+		explicit reverse_iterator(RanIt _x) :
+		current(_x)
+		{
+		}
 		template <class U>
-			reverse_iterator(const reverse_iterator<U>& _u) :
-				current(_u.base()) {}
-//		template <class U>
-//			reverse_iterator& operator=(const reverse_iterator<U>& _u)
-//				{
-//					current = _u.base();
-//					return *this;
-//				}
+		explicit reverse_iterator(const reverse_iterator<U>& _u) :
+		current(_u.base())
+		{
+		}
 		RanIt base() const
 		{
 			return current;
 		}
 
+
 		/*Operators*/
 
-		reference		  operator*() const { RanIt tmp = current; return *--tmp; }
-		pointer			  operator->() const { return &**this; }
-		reverse_iterator& operator++() { --current; return *this; }
-		reverse_iterator  operator++(int) { reverse_iterator tmp(*this); --current; return tmp; }
-		reverse_iterator& operator--() { ++current; return *this; }
-		reverse_iterator  operator--(int) { reverse_iterator tmp(*this); ++current; return tmp; }
-		reverse_iterator  operator+ (distance_type n) const { return reverse_iterator(current - n); }
-		reverse_iterator& operator+=(distance_type n) { current -= n; return *this; }
-		reverse_iterator  operator- (distance_type n) const { return reverse_iterator(current + n); }
-		reverse_iterator& operator-=(distance_type n) { current += n; return *this; }
-		reference         operator[](distance_type n) const { return *(*this + n); }
+		reference	operator*() const { RanIt tmp = current; return *--tmp; }
+		pointer		operator->() const { return &**this; }
+		Myt&		operator++() { --current; return *this; }
+		Myt			operator++(int) { Myt tmp(*this); --current; return tmp; }
+		Myt&		operator--() { ++current; return *this; }
+		Myt			operator--(int) { Myt tmp(*this); ++current; return tmp; }
+		Myt  		operator+ (Diff n) const { return Myt(current - n); }
+		Myt& 		operator+=(Diff n) { current -= n; return *this; }
+		Myt			operator- (Diff n) const { return Myt(current + n); }
+		Myt&		operator-=(Diff n) { current += n; return *this; }
+		reference	operator[](Diff n) const { return *(*this + n); }
+		protected:
+			RanIt current;
 	};
 
 	template <class It1, class It2>
@@ -86,7 +89,7 @@ namespace ft
 		inline bool
 		operator>=(const reverse_iterator<It1>& x, const reverse_iterator<It2>& y) { return x.base() <= y.base(); }
 	template <class It1, class It2>
-		inline typename reverse_iterator<It1>::distance_type
+		inline typename reverse_iterator<It1>::Diff
 		operator-(const reverse_iterator<It1> &x, const reverse_iterator<It2>& y) { return x.base() >= y.base(); }
 }
 

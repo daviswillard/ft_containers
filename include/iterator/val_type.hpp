@@ -20,10 +20,10 @@ namespace ft
 	/*These functions return a pointer to type T, instead of and object of type T*/
 
 	template <class It> inline
-		typename ft::iterator_traits<It>::value_type* Val_type(It)
-		{
-			return 0;
-		}
+	typename ft::iterator_traits<It>::value_type* Val_type(It)
+	{
+		return 0;
+	}
 
 	/*
 	 * If compiler doesn't support partial template specialization, then:

@@ -66,7 +66,7 @@ namespace ft
 	{
 		size_type N = (size_type)F;
 		if (Buy(N))
-			L = Ufill(F, N, (T)L);
+			Last = Ufill(First, N, (T)L);
 	}
 
 	template <class T, class A>

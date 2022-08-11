@@ -12,7 +12,7 @@ namespace ft
 	}
 
 	template <class OutIt, class Sz, class T> inline
-	void fill_n(OutIt First, Sz N,  const T & X)
+	void fill(OutIt First, Sz N,  const T & X)
 	{
 
 		for (; 0 < N ; --N, ++First)

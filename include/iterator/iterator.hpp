@@ -20,8 +20,8 @@
 #include "iterator_traits.hpp"
 #include "val_type.hpp"
 #include "adv_dist.hpp"
-#include "reverse_iterator.hpp"
 #include "random_access_iterator.hpp"
+#include "reverse_iterator.hpp"
 #include "dist_type.hpp"
 
 #endif

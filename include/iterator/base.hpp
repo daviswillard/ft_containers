@@ -14,6 +14,7 @@
 #define BASE_ITERATOR_H
 
 #include <cstddef>
+#include "iterator_tag.hpp"
 
 namespace ft
 {
@@ -27,6 +28,16 @@ namespace ft
 		typedef	Reference	reference;
 		typedef	Category	iterator_category;
 	};
+
+	template <class T, class Dist, class Pt, class Rt>
+	struct Bidit : public iterator<ft::bidirectional_iterator_tag, T, Dist, Pt, Rt>
+	{};
+	template <class T, class Dist, class Pt, class Rt>
+	struct Ranit : public iterator<ft::random_access_iterator_tag, T, Dist, Pt, Rt>
+	{};
+	template <class T, class Dist, class Pt, class Rt>
+	struct Outit : public iterator<ft::output_iterator_tag, void, void, void, void>
+	{};
 }
 
 #endif
