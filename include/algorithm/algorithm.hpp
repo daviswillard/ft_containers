@@ -5,5 +5,6 @@
 #include "fill.hpp"
 #include "lexicographical_compare.hpp"
 #include "mismatch.hpp"
+#include "copy_backward.hpp"
 
 #endif

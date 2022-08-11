@@ -10,7 +10,7 @@ DEPS		=	$(OBJS:.o=.d)
 INC			=	-Iinclude/algorithm -Iinclude/functional -Iinclude/iterator -Iinclude/map \
 					-Iinclude/set -Iinclude/utils -Iinclude/vector -Iinclude/xtree
 
-CC			=	clang++
+CC			=	g++
 CPP_FLAGS	=	-Wall -Wextra -Werror -std=c++98
 
 all:		$(NAME)

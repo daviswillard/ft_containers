@@ -13,13 +13,12 @@
 #ifndef ITERATOR_HPP
 #define ITERATOR_HPP
 
-#include <cstddef>
-#include "base.hpp" //Here I describe template for base iterator class
+#include "base.hpp"
 #include "iterator_tag.hpp"
 #include "iter_cat.hpp"
 #include "iterator_traits.hpp"
 #include "val_type.hpp"
-#include "adv_dist.hpp"
+#include "advance.hpp"
 #include "random_access_iterator.hpp"
 #include "reverse_iterator.hpp"
 #include "dist_type.hpp"

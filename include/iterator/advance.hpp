@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ADV_DIST_HPP
-# define ADV_DIST_HPP
+#ifndef ADVANCE_HPP
+# define ADVANCE_HPP
 
 # include "iterator_traits.hpp"
 # include "iterator_tag.hpp"

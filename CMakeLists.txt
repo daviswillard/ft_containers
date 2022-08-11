@@ -18,11 +18,9 @@ add_executable(ft_containers
         include/functional/less.hpp
         include/algorithm/equal.hpp
         include/algorithm/lexicographical_compare.hpp
-        include/iterator/adv_dist.hpp
+        include/iterator/advance.hpp
         include/iterator/base.hpp
         include/iterator/dist_type.hpp
-        include/iterator/insert_iterator.hpp
-        include/iterator/inserter.hpp
         include/iterator/iter_cat.hpp
         include/iterator/iterator.hpp
         include/iterator/iterator_tag.hpp
@@ -58,4 +56,5 @@ add_executable(ft_containers
         include/stack/stack_modifiers.hpp
         include/stack/stack_non_member_functions.hpp
         include/stack/stack_protected.hpp
-        include/algorithm/algorithm.hpp)
+        include/algorithm/algorithm.hpp
+        include/algorithm/copy_backward.hpp)

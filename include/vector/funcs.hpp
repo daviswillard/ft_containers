@@ -22,14 +22,14 @@ namespace ft
 		{
 			const_iterator S = rhs.begin() + size();
 			std::copy(rhs.begin(), S, First);
-			Last = Ucopy(S, rhs.end(), Last);
+			Last = ItCopy(S, rhs.end(), Last);
 		}
 		else
 		{
 			Destroy(First, Last);
 			Mybase::Alval.deallocate(First, End - First);
 			if (Buy(rhs.size()))
-				Last = Ucopy(rhs.begin(), rhs.end(), First);
+				Last = ItCopy(rhs.begin(), rhs.end(), First);
 		}
 		return *this;
 	}
@@ -44,7 +44,7 @@ namespace ft
 			pointer Q = Mybase::Alval.allocate(N,  NULL);
 			try
 			{
-				Ucopy(begin(), end(), Q);
+				ItCopy(begin(), end(), Q);
 			}
 			catch (...)
 			{

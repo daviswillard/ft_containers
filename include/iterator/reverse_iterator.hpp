@@ -20,18 +20,18 @@ namespace ft
 {
 	template <class RanIt>
 		class reverse_iterator : public iterator<
-				typename ft::iterator_traits<RanIt>::iterator_category,
-				typename ft::iterator_traits<RanIt>::value_type,
-				typename ft::iterator_traits<RanIt>::difference_type,
-				typename ft::iterator_traits<RanIt>::pointer,
-				typename ft::iterator_traits<RanIt>::reference>
+				typename iterator_traits<RanIt>::iterator_category,
+				typename iterator_traits<RanIt>::value_type,
+				typename iterator_traits<RanIt>::difference_type,
+				typename iterator_traits<RanIt>::pointer,
+				typename iterator_traits<RanIt>::reference>
 	{
 	public:
-		typedef reverse_iterator<RanIt>									Myt;
-		typedef RanIt													iterator_type;
-		typedef typename ft::iterator_traits<RanIt>::difference_type	Diff;
-		typedef typename ft::iterator_traits<RanIt>::reference			reference;
-		typedef typename ft::iterator_traits<RanIt>::pointer			pointer;
+		typedef reverse_iterator<RanIt>								Myt;
+		typedef RanIt												iterator_type;
+		typedef typename iterator_traits<RanIt>::difference_type	Diff;
+		typedef typename iterator_traits<RanIt>::reference			reference;
+		typedef typename iterator_traits<RanIt>::pointer			pointer;
 
 		/*Default constructor, copy constructors*/
 
@@ -43,8 +43,7 @@ namespace ft
 		{
 		}
 		template <class U>
-		explicit reverse_iterator(const reverse_iterator<U>& _u) :
-		current(_u.base())
+		reverse_iterator(const reverse_iterator<U>& _u): current(_u.base())
 		{
 		}
 		RanIt base() const

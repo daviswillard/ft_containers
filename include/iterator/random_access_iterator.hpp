@@ -33,16 +33,10 @@ namespace ft
 		explicit random_access_iterator(const Ptr& p): current(p)
 		{
 		}
-		random_access_iterator(const Myt& other)
+		random_access_iterator(const random_access_iterator<Type, Dist, Ptr, Ref,
+				Ptr_const, Ref_const>& other)
 		: current(other.base())
 		{
-		}
-		template <class _T, class _D, class _Pt, class _Rt, class _Pt2, class _Rt2>
-		random_access_iterator(const random_access_iterator<_T, _D, _Pt, _Rt,
-							   _Pt2, _Rt2> &X)
-	   	: current (X.base())
-		{
-
 		}
 
 		inline Ptr base() const

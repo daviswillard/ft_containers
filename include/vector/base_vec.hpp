@@ -11,11 +11,11 @@ namespace ft
 	class Vector_val
 	{
 	protected:
-		explicit Vector_val(A Al = A()): Alval(Al)
+		Vector_val(A Al = A()): Alval(Al)
 		{
 		}
-		typedef typename A::template rebind<T>::
-		other Alty;
+		typedef typename A::
+		template rebind<T>::other Alty;
 		Alty Alval;
 	};
 
@@ -135,7 +135,7 @@ namespace ft
 		bool	Lt(const Myt& X) const;
 
 		template <class It>
-		pointer Ucopy(It First, It Last, pointer Q);
+		pointer ItCopy(It First, It Last, pointer Ptr);
 		pointer Ufill(pointer Q, size_type N, const T &X);
 		void	Xlen() const;
 		void	Xran() const;
@@ -186,5 +186,6 @@ namespace ft
 # include "protected_vec.hpp"
 # include "funcs.hpp"
 # include "sequence_access.hpp"
+# include "template_functions.hpp"
 
 #endif //BASE_VEC_HPP
