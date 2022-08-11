@@ -108,11 +108,11 @@ namespace ft
 
 		class	        iterator;
 		friend class	Tree<TreeTraits>::iterator;
-		typedef	Tree<TreeTraits>::iterator iterator;
+//		typedef typename	Tree<TreeTraits>::iterator iterator;
 
 		class	        const_iterator;
 		friend class	Tree<TreeTraits>::const_iterator;
-		typedef	Tree<TreeTraits>::const_iterator const_iterator;
+//		typedef	Tree<TreeTraits>::const_iterator const_iterator;
 
 		typedef ft::reverse_iterator<iterator>			reverse_iterator;
 		typedef	ft::reverse_iterator<const_iterator>	const_reverse_iterator;
@@ -428,7 +428,7 @@ namespace ft
 		Nodeptr	Buynode(Nodeptr Parg, char Carg)
 		{
 			Nodeptr S = this->Alnod.allocate(1);
-#if defined (__linux__) && defined (__GNUC__)
+#if defined (__linux__) && (defined (__GNUC__) || defined (__clang__))
 			this->Alptr.construct(&Left(S), NULL);
 			this->Alptr.construct(&Right(S), NULL);
 #elif defined (__APPLE__) && defined (__clang__)

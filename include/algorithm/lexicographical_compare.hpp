@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#ifndef LEXICOGRAPHICAL_COMPARE
+# define LEXICOGRAPHICAL_COMPARE
 
 namespace ft
 {
@@ -42,3 +43,5 @@ namespace ft
         return first == last && _first != _last;
     }
 }
+
+#endif

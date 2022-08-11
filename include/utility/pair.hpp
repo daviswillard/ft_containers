@@ -37,41 +37,41 @@ namespace ft
 
 //Operators of class pair
 
-		template <class T1, class T2>
-			inline
-			bool operator==(const pair<T1, T2>& X, const pair<T1, T2>& Y) {
-				return X.first == Y.first && X.second == Y.second;
-			}
-		template <class T1, class T2>
-			inline
-			bool operator!=(const pair<T1, T2>& X, const pair<T1, T2>& Y) {
-				return !(X == Y);
-			}
-		template <class T1, class T2>
-			inline
-			bool operator<(const pair<T1, T2>& X, const pair<T1, T2>& Y) {
-				return X.first < Y.first || !(Y.first < X.first && X.second < Y.second);
-			}
-		template <class T1, class T2>
-			inline
-			bool operator>(const pair<T1, T2>& X, const pair<T1, T2>& Y) {
-				return Y < X;
-			}
-		template <class T1, class T2>
-			inline
-			bool operator>=(const pair<T1, T2>& X, const pair<T1, T2>& Y) {
-				return !(Y > X);
-			}
-		template <class T1, class T2>
-			inline
-			bool operator<=(const pair<T1, T2>& X, const pair<T1, T2>& Y) {
-				return !(X > Y);
-			}
+	template <class T1, class T2>
+		inline
+		bool operator==(const pair<T1, T2>& X, const pair<T1, T2>& Y) {
+			return X.first == Y.first && X.second == Y.second;
+		}
+	template <class T1, class T2>
+		inline
+		bool operator!=(const pair<T1, T2>& X, const pair<T1, T2>& Y) {
+			return !(X == Y);
+		}
+	template <class T1, class T2>
+		inline
+		bool operator<(const pair<T1, T2>& X, const pair<T1, T2>& Y) {
+			return X.first < Y.first || !(Y.first < X.first && X.second < Y.second);
+		}
+	template <class T1, class T2>
+		inline
+		bool operator>(const pair<T1, T2>& X, const pair<T1, T2>& Y) {
+			return Y < X;
+		}
+	template <class T1, class T2>
+		inline
+		bool operator>=(const pair<T1, T2>& X, const pair<T1, T2>& Y) {
+			return !(Y > X);
+		}
+	template <class T1, class T2>
+		inline
+		bool operator<=(const pair<T1, T2>& X, const pair<T1, T2>& Y) {
+			return !(X > Y);
+		}
 
-		template <class T1, class T2>
-			inline
-			pair<T1, T2> make_pair(const T1& first, const T2& second) {
-				return pair<T1, T2>(first, second);
-			}
+	template <class T1, class T2>
+		inline
+		pair<T1, T2> make_pair(const T1& first, const T2& second) {
+			return pair<T1, T2>(first, second);
+		}
 }
 #endif

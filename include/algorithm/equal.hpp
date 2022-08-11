@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#ifndef EQUAL
+# define EQUAL
 
 #include "mismatch.hpp"
 
@@ -29,3 +30,5 @@ namespace ft
 		return ft::mismatch(first, last, ref, p).first == last;
 	}
 }
+
+#endif

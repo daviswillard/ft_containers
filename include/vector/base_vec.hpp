@@ -60,8 +60,9 @@ namespace ft
 		vector(It First, It Last, const A& Al);
 
 		~vector();
+
+		A 						get_allocator() const;
 		Myt&					operator= (const Myt& rhs);
-		void					reserve(size_type N);
 		size_type				capacity() const;
 
 		iterator				begin();
@@ -75,11 +76,11 @@ namespace ft
 
 		void					resize(size_type N);
 		void					resize(size_type N, T X);
+		void					reserve(size_type N);
 		size_type				size() const;
 		size_type				max_size() const;
 		bool 					empty() const;
 
-		A 						get_allocator() const;
 		const_reference			at(size_type n) const;
 		reference 				at(size_type n);
 		const_reference			operator[](size_type n) const;

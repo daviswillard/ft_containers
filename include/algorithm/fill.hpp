@@ -3,11 +3,6 @@
 
 namespace ft
 {
-	/*
-	** Заполните диапазон значением
-	** Присваивает значение X всем элементам в диапазоне [First, Last).
-	*/
-
 	template <class FwdIt, class T> inline
 	void fill(FwdIt First, 	FwdIt Last,  const T & X)
 	{
@@ -16,7 +11,6 @@ namespace ft
 			*First = X;
 	}
 
-	/* Заполняем n раз */
 	template <class OutIt, class Sz, class T> inline
 	void fill_n(OutIt First, Sz N,  const T & X)
 	{
@@ -27,4 +21,4 @@ namespace ft
 };
 
 
-#endif //FILL_HPP
+#endif

@@ -20,8 +20,10 @@
 namespace ft
 {
 	template <class TreeTraits>
-	class Tree<TreeTraits>::iterator : public ft::iterator<bidirectional_iterator_tag, value_type,
-			Dift, Tptr, Reft> {
+	class Tree<TreeTraits>::iterator :
+		public ft::iterator<bidirectional_iterator_tag, value_type,
+							Dift, Tptr, Reft>
+	{
 	private:
 		void Dec() {
 			if (Isnil(current_))

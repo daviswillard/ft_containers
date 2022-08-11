@@ -38,6 +38,12 @@ namespace ft
 		{
 		}
 
+		template <class _T, class _D, class _Pt, class _Rt, class _Pt2, class _Rt2>
+		random_access_iterator(const random_access_iterator<_T, _D, _Pt, _Rt, _Pt2, _Rt2> &X): current (X.base())
+		{
+
+		}
+
 		~random_access_iterator()
 		{
 		}
@@ -55,7 +61,7 @@ namespace ft
 		inline random_access_iterator& operator=(const RanIt& ref)
 		{
 			if (this != &ref)
-				current = ref.current;
+				this->current = ref.current;
 			return *this;
 		}
 
@@ -145,7 +151,7 @@ namespace ft
 		}
 
 		inline bool operator!= (const iterator& b) const {
-			return (current != b.current);
+			return !(current == b.current);
 		}
 
 	};

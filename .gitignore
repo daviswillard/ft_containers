@@ -1,4 +1,6 @@
 /cmake-build-debug/
 /.ccls
 /.ccls-cache/
-/ft_containers-unit-test/
+ft_containers
+/.idea/
+/build_files/
