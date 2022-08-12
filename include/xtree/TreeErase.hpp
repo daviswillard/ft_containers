@@ -14,6 +14,7 @@
 #define FT_CONTAINERS_TREEERASE_H
 
 #include "base.hpp"
+#include "TreeIterator.hpp"
 
 namespace ft
 {

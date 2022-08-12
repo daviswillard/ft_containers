@@ -168,7 +168,7 @@ namespace ft
 		{
 			ItCopy(P, end(), P.base() + M);
 			It Mid = F;
-			advance(Mid, end() - P);
+			ft::advance(Mid, end() - P);
 			try
 			{
 				ItCopy(Mid, L, Last);

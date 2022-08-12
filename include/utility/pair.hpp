@@ -13,6 +13,8 @@
 #ifndef PAIR_HPP
 # define PAIR_HPP
 
+#include <iosfwd>
+
 namespace ft
 {
 /*
@@ -30,7 +32,7 @@ namespace ft
 		pair (): first(T1()), second(T2()) {}
 		pair (const T1& value1, const T2& value2): first(value1), second(value2) {}
 		template<class U1, class U2>
-		explicit pair (const pair<U1, U2>& X): first(X.first), second(X.second) {}
+		pair (const pair<U1, U2>& X): first(X.first), second(X.second) {}
 		T1 first;
 		T2 second;
 	};

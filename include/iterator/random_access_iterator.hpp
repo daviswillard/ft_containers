@@ -39,6 +39,12 @@ namespace ft
 		{
 		}
 
+		template <class _T, class _D, class _Pt, class _Rt, class _Pt2, class _Rt2>
+		random_access_iterator(const random_access_iterator<_T, _D, _Pt, _Rt, _Pt2, _Rt2> &X): current (X.base())
+		{
+
+		}
+
 		inline Ptr base() const
 		{
 			return current;
@@ -51,7 +57,7 @@ namespace ft
 			return *this;
 		}
 
-		inline Ref	operator*()
+		inline Ref	operator*() const
 		{
 			return *current;
 		}
@@ -98,8 +104,8 @@ namespace ft
 		}
 
 
-		inline Dist operator- (Dist n) const {
-			return (current - n);
+		inline Myt operator- (Dist n) const {
+			return Myt(current - n);
 		}
 
 		inline Ref operator[] (Dist n) const {
