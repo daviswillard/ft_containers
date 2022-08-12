@@ -151,7 +151,7 @@ namespace ft
 
 			iterator() : current_(0) {}
 
-			explicit iterator(Nodeptr P) : current_(P) {}
+			iterator(Nodeptr P) : current_(P) {}
 
 			reference operator*() const {
 				return Value(current_);

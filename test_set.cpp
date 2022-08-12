@@ -400,6 +400,13 @@ void test_map()
 
 }
 
+void kek()
+{
+	std::map<int, int> a;
+	ft::map<int, int> b;
+	b.lower_bound();
+}
+
 int main()
 {
     test_set();
@@ -416,3 +423,5 @@ int main()
 
     return 0;
 }
+
+
