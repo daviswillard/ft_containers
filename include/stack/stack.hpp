@@ -29,17 +29,53 @@ namespace ft {
 		void push(const value_type& x);
 		void pop();
 
-		bool operator== (const stack<T,Container>& rhs);
-		bool operator!= (const stack<T,Container>& rhs);
-		bool operator< (const stack<T,Container>& rhs);
-		bool operator<= (const stack<T,Container>& rhs);
-		bool operator> (const stack<T,Container>& rhs);
-		bool operator>= (const stack<T,Container>& rhs);
+//		bool operator== (const stack<T,Container>& rhs);
+//		bool operator!= (const stack<T,Container>& rhs);
+//		bool operator< (const stack<T, Container> rhs);
+//		bool operator<= (const stack<T,Container>& rhs);
+//		bool operator> (const stack<T,Container>& rhs);
+//		bool operator>= (const stack<T,Container>& rhs);
 
-	protected:
+//	protected:
 		Container container;
-		bool Eq(const stack<T, Container>& X) const;
-		bool Lt(const stack<T, Container>& X) const;
+//		bool Eq(const stack<T, Container>& X) const;
+//		bool Lt(const stack<T, Container>& X) const;
+	};
+
+	template <class Type, class Container> inline
+	bool operator == (const stack<Type, Container> & x, const stack<Type, Container> & y)
+	{
+		return (x.container == y.container);
+	};
+
+	template <class Type, class Container> inline
+	bool operator != (const stack<Type, Container> & x, const stack<Type, Container> & y)
+	{
+		return (!(x == y));
+	};
+
+	template <class Type, class Container> inline
+	bool operator < (const stack<Type, Container> & x, const stack<Type, Container> & y)
+	{
+		return (x.container < y.container);
+	};
+
+	template <class Type, class Container> inline
+	bool operator > (const stack<Type, Container> & x, const stack<Type, Container> & y)
+	{
+		return (y < x);
+	};
+
+	template <class Type, class Container> inline
+	bool operator >= (const stack<Type, Container> & x, const stack<Type, Container> & y)
+	{
+		return (!(x < y));
+	};
+
+	template <class Type, class Container> inline
+	bool operator <= (const stack<Type, Container> & x, const stack<Type, Container> & y)
+	{
+		return (!(y < x));
 	};
 
 }

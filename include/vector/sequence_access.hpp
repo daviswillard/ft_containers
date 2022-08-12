@@ -173,9 +173,12 @@ namespace ft
 	{
 		if (Mybase::Alval == X.Alval)
 		{
-			std::swap(First, X.First);
-			std::swap(Last, X.Last);
-			std::swap(End, X.End);
+//			std::swap(First, X.First);
+//			std::swap(Last, X.Last);
+//			std::swap(End, X.End);
+			ft::swap(First, X.First);
+			ft::swap(Last, X.Last);
+			ft::swap(End, X.End);
 		}
 		else
 		{

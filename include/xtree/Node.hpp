@@ -25,7 +25,7 @@ namespace ft
 		typedef typename TreeTraits::key_compare	key_compare;
 		typedef typename TreeTraits::value_type		value_type;
 		typedef typename allocator_type::template
-					rebind<void>::other::pointer	Genptr;
+					rebind<TreeTraits >::other::pointer	Genptr;
 		struct			Node;
 		friend struct	Node;
 		struct	Node {

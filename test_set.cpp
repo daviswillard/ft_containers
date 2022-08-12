@@ -5,7 +5,6 @@
 
 #include <deque>
 #include <list>
-#include <vector>
 
 #include <iostream>
 #include <cassert>
@@ -13,7 +12,7 @@
 
 void test_stack()
 {
-	ft::stack<int> stack;
+	ft::stack<ft::vector<int> > stack;
 	ft::stack<int> stack1;
 	typedef std::allocator<char> Myal;
 	typedef std::deque<char, Myal> Myimpl;
@@ -382,6 +381,7 @@ void test_map()
 	v0.swap(v1);
 	assert(!v0.empty() && v1.empty());
 	ft::swap(v0, v1);
+
 	assert(v0.empty() && !v1.empty());
 	assert(v1 == v1 && v0 < v1);
 	assert(v0 != v1 && v1 > v0);
@@ -402,8 +402,34 @@ void test_map()
 
 void kek()
 {
-	std::map<int, int> a;
-	ft::map<int, int> b;
+	ft::vector<int> c;
+	ft::vector<int> d;
+	for (int i = 0; i < 10; ++i) {
+		c.push_back(i * 2);
+	}
+	d.push_back(1);
+	for (ft::vector<int>::iterator it = d.begin(); it != d.end(); ++it)
+	{
+		std::cout << *it;
+	}
+	std::cout << std::endl;
+	d.insert(d.end(), c.begin(), c.end());
+	for (ft::vector<int>::iterator it = d.begin(); it != d.end(); ++it)
+	{
+		std::cout << *it;
+	}
+	d.insert(d.begin() + 5, c.begin(), c.end());
+	for (ft::vector<int>::iterator it = d.begin(); it != d.end(); ++it)
+	{
+		std::cout << *it;
+	}
+	std::cout << std::endl;
+	std::cout << "10246810121416181024602468101214161881012141618" << std::endl;
+
+	std::map<int, int, std::greater<int> > a;
+	ft::map<int, int, std::greater<int> > b;
+	std::map<int, int>::iterator ittt = a.begin();
+	std::cout << "         " << (*ittt).first << "         " << std::endl;
 	for (int i = 0; i < 10; ++i) {
 		b.insert(ft::make_pair(i, i * 2));
 	}
@@ -418,17 +444,17 @@ void kek()
 
 int main()
 {
-//    test_set();
-//    std::cout << "SUCCESS testing <set>" << std::endl;
-//
-//	test_map();
-//	std::cout << "SUCCESS testing <map>" << std::endl;
-//
-//	test_vec();
-//	std::cout << "SUCCESS testing <vector>" << std::endl;
-//
-//	test_stack();
-//	std::cout << "SUCCESS testing <stack>" << std::endl;
+    test_set();
+    std::cout << "SUCCESS testing <set>" << std::endl;
+
+	test_map();
+	std::cout << "SUCCESS testing <map>" << std::endl;
+
+	test_vec();
+	std::cout << "SUCCESS testing <vector>" << std::endl;
+
+	test_stack();
+	std::cout << "SUCCESS testing <stack>" << std::endl;
 
 	kek();
 

@@ -30,7 +30,7 @@ add_executable(ft_containers
         include/iterator/val_type.hpp
         include/map/map.hpp
         include/utility/enable_if.hpp
-        include/utility/integral_constant.hpp
+        include/utility/is_integral.hpp
         include/utility/pair.hpp
         include/utility/utility.hpp
         include/xtree/TreeIterator.hpp
@@ -57,4 +57,4 @@ add_executable(ft_containers
         include/stack/stack_non_member_functions.hpp
         include/stack/stack_protected.hpp
         include/algorithm/algorithm.hpp
-        include/algorithm/copy_backward.hpp)
+        include/algorithm/copy_backward.hpp include/algorithm/swap.hpp)

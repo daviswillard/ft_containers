@@ -1,6 +1,8 @@
 #ifndef STACK_CAPACITY_HPP
 #define STACK_CAPACITY_HPP
 
+#include "stack.hpp"
+
 namespace ft
 {
 	// checks whether the underlying container is empty
@@ -16,6 +18,7 @@ namespace ft
 	{
 		return (container.size());
 	}
+
 }
 
 #endif // STACK_CAPACITY_HPP

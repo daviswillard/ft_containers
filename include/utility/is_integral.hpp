@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   integral_constant.h                                :+:      :+:    :+:   */
+/*   is_integral.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dwillard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INTEGRAL_CONSTANT_HPP
-# define INTEGRAL_CONSTANT_HPP
+#ifndef IS_INTEGRAL_HPP
+# define IS_INTEGRAL_HPP
 /*
  * class to check whether our value is of integral data type or not
 */

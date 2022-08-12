@@ -30,7 +30,7 @@ namespace ft
 	{
 	public:
 		typedef	map <Key, Pred, A>						Myt;
-		typedef Tree <Tmap_traits<Key, T, Pred, A> >		Mybase;
+		typedef Tree <Tmap_traits<Key, T, Pred, A> >	Mybase;
 		typedef Key										key_type;
 		typedef T										mapped_type;
 		typedef Pred									key_compare;
@@ -77,6 +77,13 @@ namespace ft
 				this->insert(*F);
 		}
 
+
+
+		~map()
+		{
+			Mybase::clear();
+		}
+
 		mapped_type& operator[] (const key_type& Kv)
 		{
 			iterator P = this->insert(value_type(Kv, mapped_type())).first;
@@ -87,7 +94,7 @@ namespace ft
 		{
 				iterator P = this->find(Kv);
 				if (P == this->end())
-					throw std::out_of_range("No such element in map!");
+					throw std::out_of_range("No such element in map");
 				return (*P).second;
 		}
 	};
