@@ -82,6 +82,14 @@ namespace ft
 			iterator P = this->insert(value_type(Kv, mapped_type())).first;
 			return (*P).second;
 		}
+
+		mapped_type& at(const key_type& Kv)
+		{
+				iterator P = this->find(Kv);
+				if (P == this->end())
+					throw std::out_of_range("No such element in map!");
+				return (*P).second;
+		}
 	};
 }
 

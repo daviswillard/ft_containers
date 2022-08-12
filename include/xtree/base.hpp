@@ -384,6 +384,7 @@ namespace ft
 			{ return value_compare(key_comp()); }
 
 
+
 //		insert-delete methods
 
 
@@ -649,7 +650,7 @@ namespace ft
 	template <class TreeTraits> inline
 	bool	operator== (const Tree<TreeTraits>& X, const Tree<TreeTraits>& Y)
 	{
-		return (X.size() == Y.size() && equal(X.begin(), X.end(), Y.begin()));
+		return (X.size() == Y.size() && ft::equal(X.begin(), X.end(), Y.begin()));
 	}
 
 	template <class TreeTraits> inline
@@ -661,7 +662,8 @@ namespace ft
 	template <class TreeTraits> inline
 	bool	operator< (const Tree<TreeTraits>& X, const Tree<TreeTraits>& Y)
 	{
-		return ft::lexicographical_compare(X.begin(), X.end(), Y.begin(), Y.end(), X.value_comp());
+		return ft::lexicographical_compare(X.begin(), X.end(), Y.begin(), Y.end());
+//		return ft::lexicographical_compare(X.begin(), X.end(), Y.begin(), Y.end(), X.value_comp());
 	}
 
 	template <class TreeTraits> inline

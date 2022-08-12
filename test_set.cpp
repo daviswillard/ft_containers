@@ -404,22 +404,33 @@ void kek()
 {
 	std::map<int, int> a;
 	ft::map<int, int> b;
-	b.lower_bound();
+	for (int i = 0; i < 10; ++i) {
+		b.insert(ft::make_pair(i, i * 2));
+	}
+	for (int i = 0; i < 10; ++i) {
+		a.insert(std::make_pair(i, i * 2));
+	}
+	std::cout << b.lower_bound(2)->first << '\n' << b.lower_bound(2)->second << std::endl;
+	std::cout << a.lower_bound(2)->first << '\n' << a.lower_bound(2)->second << std::endl;
+	b.at(1);
+	std::cout << a.at(2) << std::endl;
 }
 
 int main()
 {
-    test_set();
-    std::cout << "SUCCESS testing <set>" << std::endl;
+//    test_set();
+//    std::cout << "SUCCESS testing <set>" << std::endl;
+//
+//	test_map();
+//	std::cout << "SUCCESS testing <map>" << std::endl;
+//
+//	test_vec();
+//	std::cout << "SUCCESS testing <vector>" << std::endl;
+//
+//	test_stack();
+//	std::cout << "SUCCESS testing <stack>" << std::endl;
 
-	test_map();
-	std::cout << "SUCCESS testing <map>" << std::endl;
-
-	test_vec();
-	std::cout << "SUCCESS testing <vector>" << std::endl;
-
-	test_stack();
-	std::cout << "SUCCESS testing <stack>" << std::endl;
+	kek();
 
     return 0;
 }
