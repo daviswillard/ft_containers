@@ -10,10 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#ifndef TREE_HPP
+# define TREE_HPP
 
 #include "base.hpp"
 #include "Node.hpp"
 #include "TreePtr.hpp"
 #include "TreeVal.hpp"
+#include "TreeIterator.hpp"
+#include "TreeCIterator.hpp"
 //#include "TreeInit.h"
+
+#endif

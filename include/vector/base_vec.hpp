@@ -4,6 +4,7 @@
 # include <memory>
 # include <stdexcept>
 # include "../iterator/iterator.hpp"
+# include "../algorithm/algorithm.hpp"
 
 namespace ft
 {
@@ -11,11 +12,11 @@ namespace ft
 	class Vector_val
 	{
 	protected:
-		explicit Vector_val(A Al = A()): Alval(Al)
+		Vector_val(A Al = A()): Alval(Al)
 		{
 		}
-		typedef typename A::template rebind<T>::
-		other Alty;
+		typedef typename A::
+		template rebind<T>::other Alty;
 		Alty Alval;
 	};
 
@@ -60,8 +61,9 @@ namespace ft
 		vector(It First, It Last, const A& Al);
 
 		~vector();
+
+		A 						get_allocator() const;
 		Myt&					operator= (const Myt& rhs);
-		void					reserve(size_type N);
 		size_type				capacity() const;
 
 		iterator				begin();
@@ -75,11 +77,11 @@ namespace ft
 
 		void					resize(size_type N);
 		void					resize(size_type N, T X);
+		void					reserve(size_type N);
 		size_type				size() const;
 		size_type				max_size() const;
 		bool 					empty() const;
 
-		A 						get_allocator() const;
 		const_reference			at(size_type n) const;
 		reference 				at(size_type n);
 		const_reference			operator[](size_type n) const;
@@ -130,11 +132,8 @@ namespace ft
 		template<class It>
 		void	Assign(It First, It Last, input_iterator_tag);
 
-		bool 	Eq(const Myt& X) const;
-		bool	Lt(const Myt& X) const;
-
 		template <class It>
-		pointer Ucopy(It First, It Last, pointer Q);
+		pointer ItCopy(It First, It Last, pointer Ptr);
 		pointer Ufill(pointer Q, size_type N, const T &X);
 		void	Xlen() const;
 		void	Xran() const;
@@ -147,7 +146,7 @@ namespace ft
 	template<class T, class allocator_type> inline
 	bool operator==(const vector<T, allocator_type>& X, const vector<T, allocator_type>& Y)
 	{
-		return (X.size() == Y.size() && equal(X.begin(), X.end(), Y.begin()));
+		return (X.size() == Y.size() && ft::equal(X.begin(), X.end(), Y.begin()));
 	}
 
 	template<class T, class allocator_type> inline
@@ -159,7 +158,7 @@ namespace ft
 	template<class T, class allocator_type> inline
 	bool operator<(const vector<T, allocator_type>& X, const vector<T, allocator_type>& Y)
 	{
-		return (lexicographical_compare(X.begin(), X.end(), Y.begin(), Y.end()));
+		return (ft::lexicographical_compare(X.begin(), X.end(), Y.begin(), Y.end()));
 	}
 
 	template<class T, class allocator_type> inline
@@ -185,5 +184,6 @@ namespace ft
 # include "protected_vec.hpp"
 # include "funcs.hpp"
 # include "sequence_access.hpp"
+# include "template_functions.hpp"
 
 #endif //BASE_VEC_HPP

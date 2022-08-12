@@ -34,7 +34,7 @@ namespace ft
 		{
 		}
 
-		explicit Tmap_traits(Pred Parg) : comp(Parg)
+		Tmap_traits(Pred Parg) : comp(Parg)
 		{
 		}
 

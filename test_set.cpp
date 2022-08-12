@@ -41,7 +41,7 @@ void test_stack()
 	assert(v0.size() == 3 && v0.top() == 'c');
 	assert(v0 == v0 && v0a < v0);
 	assert(v0 != v0a && v0 > v0a);
-	assert(v0a <= v0 && v0 >= v0a);
+	assert(v0a <= v0a && v0a >= v0a);
 	v0.pop();
 	assert(v0.top() == 'b');
 	v0.pop();
@@ -193,7 +193,7 @@ void	test_vec()
 	pair.insert(pair.begin(), ft::make_pair(4, 'a'));
 
 	ft::vector<ft::pair<int, char>, std::allocator<ft::pair<int, char> > >::iterator itp(pair.begin());
-	assert(itp->first == 4 && itp->second == 'a') ;
+	assert(itp->first == 4 && itp->second == 'a');
 }
 
 void test_set()
@@ -400,6 +400,13 @@ void test_map()
 
 }
 
+void kek()
+{
+	std::map<int, int> a;
+	ft::map<int, int> b;
+	b.lower_bound();
+}
+
 int main()
 {
     test_set();
@@ -416,3 +423,5 @@ int main()
 
     return 0;
 }
+
+

@@ -15,17 +15,17 @@
 
 namespace ft
 {
-	template	<class Type, class Dist, class Ptr, class Ref,
+	template <class Type, class Dist, class Ptr, class Ref,
 					class Ptr_const, class Ref_const>
 	class random_access_iterator :
-		public ft::iterator	<ft::random_access_iterator_tag,
-								Type, Dist, Ptr, Ref>
+	public iterator	<random_access_iterator_tag,
+							Type, Dist, Ptr, Ref>
 	{
 	protected:
 		Ptr	current;
 	public:
 		typedef	random_access_iterator<Type, Dist, Ptr, Ref,
-										Ptr_const, Ref_const>	RanIt;
+										Ptr_const, Ref_const>	Myt;
 
 		random_access_iterator()
 		{
@@ -33,38 +33,31 @@ namespace ft
 		explicit random_access_iterator(const Ptr& p): current(p)
 		{
 		}
-		random_access_iterator(const RanIt& other)
+		random_access_iterator(const random_access_iterator<Type, Dist, Ptr, Ref,
+				Ptr_const, Ref_const>& other)
 		: current(other.base())
 		{
 		}
 
-		~random_access_iterator()
+		template <class _T, class _D, class _Pt, class _Rt, class _Pt2, class _Rt2>
+		random_access_iterator(const random_access_iterator<_T, _D, _Pt, _Rt, _Pt2, _Rt2> &X): current (X.base())
 		{
+
 		}
-		typedef random_access_iterator<Type, Dist, Ptr, Ref,
-			Ptr_const, Ref_const>								iterator;
-		typedef typename iterator::difference_type				difference_type;
-		typedef typename iterator::pointer 						pointer;
-		typedef typename iterator::reference 					reference;
 
 		inline Ptr base() const
 		{
 			return current;
 		}
 
-		inline random_access_iterator& operator=(const RanIt& ref)
+		inline random_access_iterator& operator=(const Myt& ref)
 		{
 			if (this != &ref)
-				current = ref.current;
+				this->current = ref.current;
 			return *this;
 		}
 
-		inline Ref	operator*()
-		{
-			return *current;
-		}
-
-		inline Ref operator*() const
+		inline Ref	operator*() const
 		{
 			return *current;
 		}
@@ -74,89 +67,91 @@ namespace ft
 			return &**this;
 		}
 
-		inline random_access_iterator& operator+= (difference_type n) {
-			current += n;
+		inline Myt& operator++ () {
+			++current;
 			return *this;
 		}
 
-		inline iterator& operator++ () {
-			current++;
-			return *this;
-		}
-
-		inline iterator operator++ (int) {
-			iterator temp = *this;
+		inline Myt operator++ (int) {
+			Myt temp = *this;
 			++current;
 			return temp;
 		}
 
-		inline iterator operator+ (difference_type n) {
-			iterator temp = *this;
-			return (temp += n);
+		inline Myt& operator+= (Dist n) {
+			current += n;
+			return *this;
 		}
 
-		inline iterator& operator-= (difference_type n) {
+		inline Myt operator+ (Dist n) const {
+			return Myt(current + n);
+		}
+
+		inline Myt& operator-= (Dist n) {
 			current -= n;
 			return *this;
 		}
 
-		inline iterator& operator-- () {
+		inline Myt& operator-- () {
 			--current;
 			return *this;
 		}
 
-		inline iterator operator-- (int) {
-			iterator temp = *this;
-			current--;
+		inline Myt operator-- (int) {
+			Myt temp = *this;
+			--current;
 			return temp;
 		}
 
-		inline iterator operator- (difference_type n) const {
-			iterator temp = *this;
-			return (temp -= n);
+
+		inline Myt operator- (Dist n) const {
+			return Myt(current - n);
 		}
 
-		inline difference_type operator- (const iterator& a) const {
-			return (current - a.current);
+		inline Ref operator[] (Dist n) const {
+			return *(*this + n);
 		}
 
-		inline reference operator[] (Dist n) const {
-			return *(current + n);
-		}
-
-		inline bool operator< (const iterator& b) const {
+		inline bool operator< (const Myt& b) const {
 			return (current < b.current);
 		}
 
-		inline bool operator> (const iterator& b) const {
-			return (current > b.current);
+		inline bool operator> (const Myt& b) const {
+			return (b < *this);
 		}
 
-		inline bool operator<= (const iterator& b) const {
-			return (current <= b.current);
+		inline bool operator<= (const Myt& b) const {
+			return !(b < *this);
 		}
 
-		inline bool operator>= (const iterator& b) const {
-			return (current >= b.current);
+		inline bool operator>= (const Myt& b) const {
+			return !(*this < b);
 		}
 
-		inline bool operator== (const iterator& b) const {
+		inline bool operator== (int Y) const
+		{
+			return current == (Ptr)Y;
+		}
+
+		inline bool operator== (const Myt& b) const {
 			return (current == b.current);
 		}
 
-		inline bool operator!= (const iterator& b) const {
-			return (current != b.current);
+		inline bool operator!= (const Myt& b) const {
+			return !(*this == b);
+		}
+
+		Dist operator- (const Myt& b) const {
+			return current - b.current;
 		}
 
 	};
 
-	template<class Type, class Dist, class Ptr, class Ref,
-			class Ptr_const, class Ref_const> inline
-	random_access_iterator<Type, Dist, Ptr, Ref, Ptr_const, Ref_const>
-	        operator+ (Dist n,
-					const random_access_iterator<Type, Dist, Ptr, Ref, Ptr_const, Ref_const>& y)
+	template<class T, class D, class P, class R, class P2, class R2, class D2> inline
+	random_access_iterator<T, D, P, R, P2, R2> operator+
+						(D2 n, const ft::random_access_iterator<T, D, P, R, P2, R2>& y)
 	{
-		return (y + n);
+		return (y + static_cast<D>(n));
 	}
 
 }

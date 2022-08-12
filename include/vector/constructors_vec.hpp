@@ -42,7 +42,7 @@ namespace ft
 	vector<T, A>::vector(const Myt& X): Mybase(X.Alval)
 	{
 		if (Buy(X.size()))
-			Last = Ucopy(X.begin(), X.end(), First);
+			Last = ItCopy(X.begin(), X.end(), First);
 	}
 
 	template <class T, class A>
@@ -60,22 +60,6 @@ namespace ft
 		Construct(F, L, Iter_cat(F));
 	}
 
-	template<class T, class A>
-	template<class It>
-	void vector<T, A>::Construct(It F, It L, Int_iterator_tag)
-	{
-		size_type N = (size_type)F;
-		if (Buy(N))
-			L = Ufill(F, N, (T)L);
-	}
-
-	template <class T, class A>
-	template<class It>
-	void	vector<T, A>::Construct(It F, It L, input_iterator_tag)
-	{
-		Buy(0);
-		insert(begin(), F, L);
-	}
 
 	template <class T, class A>
 	vector<T, A>::~vector()

@@ -2,69 +2,72 @@
 # define SEQUENCE_ACCESS_HPP
 
 # include "base_vec.hpp"
-# include "../iterator/iterator.hpp"
-# include "../algorithm/fill.hpp"
+# include "../algorithm/algorithm.hpp"
 
 namespace ft
 {
-	template <typename T, class Al>
-	typename vector<T, Al>::reference vector<T, Al>::operator[] (size_type n) {
+	template <class T, class Alloc>
+	typename vector<T, Alloc>::reference vector<T, Alloc>::operator[] (size_type n) {
 		return (*(begin() + n));
 	}
 
-	template <typename T, class Al>
-	typename vector<T, Al>::const_reference vector<T, Al>::operator[] (size_type n) const {
+	template <class T, class Alloc>
+	typename vector<T, Alloc>::const_reference vector<T, Alloc>::operator[] (size_type n) const {
 		return (*(begin() + n));
 	}
 
-	template <typename T, class Al>
-	typename vector<T, Al>::reference vector<T, Al>::at(size_type n) {
+	template <class T, class Alloc>
+	typename vector<T, Alloc>::reference vector<T, Alloc>::at(size_type n) {
 		if (n >= size())
 			Xran();
 		return (*(begin() + n));
 	}
 
-	template <typename T, class Al>
-	typename vector<T, Al>::const_reference vector<T, Al>::at(size_type n) const {
+	template <class T, class Alloc>
+	typename vector<T, Alloc>::const_reference vector<T, Alloc>::at(size_type n) const {
 		if (n >= size())
 			Xran();
 		return (*(begin() + n));
 	}
 
-	template <typename T, class Al>
-	typename vector<T, Al>::reference vector<T, Al>::front() {
+	template <class T, class Alloc>
+	typename vector<T, Alloc>::reference vector<T, Alloc>::front() {
 		return *begin();
 	}
 
-	template <typename T, class Al>
-	typename vector<T, Al>::const_reference vector<T, Al>::front() const {
+	template <class T, class Alloc>
+	typename vector<T, Alloc>::const_reference vector<T, Alloc>::front() const {
 		return *begin();
 	}
 
-	template <typename T, class Al>
-	typename vector<T, Al>::reference vector<T, Al>::back() {
+	template <class T, class Alloc>
+	typename vector<T, Alloc>::reference vector<T, Alloc>::back() {
 		return *(end() - 1);
 	}
 
-	template <typename T, class Al>
-	typename vector<T, Al>::const_reference vector<T, Al>::back() const {
+	template <class T, class Alloc>
+	typename vector<T, Alloc>::const_reference vector<T, Alloc>::back() const {
 		return *(end() - 1);
 	}
 
-	template <typename T, class Al>
-	void vector<T, Al>::clear() {
+	template <class T, class Alloc>
+	void vector<T, Alloc>::clear() {
 		erase(begin(), end());
 	}
 
-	template <typename T, class Al>
-	typename vector<T, Al>::iterator vector<T, Al>::insert(iterator P, const T &X) {
-		size_type off = size() == 0 ? 0 : P - begin();
-		insert(P, 1, X);
+	template <class T, class Alloc>
+	typename vector<T, Alloc>::iterator vector<T, Alloc>::insert(iterator P, const T &X) {
+		size_type off;
+		if (size() == 0)
+			off = 0;
+		else
+			off = P - begin();
+		insert(P, (size_type)1, X);
 		return (begin() + off);
 	}
 
-	template <typename T, class Al>
-	void vector<T, Al>::insert(iterator P, size_type M, const T &X) {
+	template <class T, class Alloc>
+	void vector<T, Alloc>::insert(iterator P, size_type M, const T &X) {
 		T Tx = X;
 		size_type N = capacity();
 		if (M == 0) {
@@ -76,17 +79,17 @@ namespace ft
 		}
 		else if (N < size() + M)
 		{
-			N = (max_size() - N / 2 < N) ? 0
-					: N + N / 2;
+			N = (max_size() - N < N) ?
+					0 : N + N;
 			if (N < size() + M)
 				N = size() + M;
-			pointer new_first = Mybase::Alval.allocate(N,  NULL);
+			pointer new_first = Mybase::Alval.allocate(N);
 			pointer new_last;
 			try
 			{
-				new_last = Ucopy(begin(), P, new_first);
+				new_last = ItCopy(begin(), P, new_first);
 				new_last = Ufill(new_last, M, Tx);
-				Ucopy(P, end(), new_last);
+				ItCopy(P, end(), new_last);
 			}
 			catch (...)
 			{
@@ -105,7 +108,7 @@ namespace ft
 		}
 		else if ((size_type) (end() - P) < M)
 		{
-			Ucopy(P, end(), P.base() + M);
+			ItCopy(P, end(), P.base() + M);
 			try
 			{
 				Ufill(Last, M - (end() - P), Tx);
@@ -121,21 +124,21 @@ namespace ft
 		else
 		{
 			iterator end = this->end();
-			Last = Ucopy(end - M, end, Last);
+			Last = ItCopy(end - M, end, Last);
 			std::copy_backward(P, end - M, end);
 			ft::fill(P, P + M, Tx);
 		}
 	}
 
-	template <typename T, class Al>
+	template <class T, class Alloc>
 	template<class InputIt>
-	void vector<T, Al>::insert(iterator P, InputIt F, InputIt L) {
+	void vector<T, Alloc>::insert(iterator P, InputIt F, InputIt L) {
 		Insert(P, F, L, Iter_cat(F));
 	}
 
 // Removes element at P
-	template <typename T, class Al>
-	typename vector<T, Al>::iterator vector<T, Al>::erase(iterator P) {
+	template <class T, class Alloc>
+	typename vector<T, Alloc>::iterator vector<T, Alloc>::erase(iterator P) {
 		std::copy(P + 1, end(), P);
 		Destroy(Last - 1, Last);
 		--Last;
@@ -144,8 +147,8 @@ namespace ft
 
 
 // Removes elements in the range
-	template <typename T, class Al>
-	typename vector<T, Al>::iterator vector<T, Al>::erase(iterator F, iterator L) {
+	template <class T, class Alloc>
+	typename vector<T, Alloc>::iterator vector<T, Alloc>::erase(iterator F, iterator L) {
 		if (F != L)
 		{
 			pointer new_last = std::copy(L, end(), F.base());
@@ -155,18 +158,18 @@ namespace ft
 		return F;
 	}
 
-	template <typename T, class Al>
-	void vector<T, Al>::push_back(const T &X) {
+	template <class T, class Alloc>
+	void vector<T, Alloc>::push_back(const T &X) {
 		insert(end(), X);
 	}
 
-	template <typename T, class Al>
-	void vector<T, Al>::pop_back() {
+	template <class T, class Alloc>
+	void vector<T, Alloc>::pop_back() {
 		erase(end() - 1);
 	}
 
-	template <typename T, class Al>
-	void vector<T, Al>::swap(vector& X)
+	template <class T, class Alloc>
+	void vector<T, Alloc>::swap(vector& X)
 	{
 		if (Mybase::Alval == X.Alval)
 		{
@@ -181,119 +184,23 @@ namespace ft
 		}
 	}
 
-	template<typename T, class Al>
-	typename vector<T, Al>::A vector<T, Al>::get_allocator() const {
+	template<class T, class Alloc>
+	typename vector<T, Alloc>::allocator_type vector<T, Alloc>::get_allocator() const {
 		return Mybase::Alval;
 	}
 
-	template<typename T, class Al>
-	void vector<T, Al>::assign(size_type N, const T& X) {
+	template<class T, class Alloc>
+	void vector<T, Alloc>::assign(size_type N, const T& X) {
 		T x = X;
 
 		erase(begin(), end());
 		insert(begin(), N, x);
 	}
 
-	template<typename T, class Al>
-	template <class It>
-	void vector<T, Al>::Assign(It F, It L, Int_iterator_tag) {
-		assign((size_type)F, (T)L);
-	}
-
-	template<typename T, class Al>
+	template<class T, class Alloc>
 	template<class It>
-	void vector<T, Al>::Assign(It F, It L, input_iterator_tag) {
-		erase(begin(), end());
-		insert(begin(), F, L);
-	}
-
-	template<typename T, class Al>
-	template<class It>
-	void vector<T, Al>::assign(It F, It L) {
-		Assign(F, L, Iter_cat(F));
-	}
-
-	template <typename T, class Alloc>
-	template <class It>
-	void    vector<T, Alloc>::Insert(iterator P, It F, It L, Int_iterator_tag) {
-		insert(P, (size_type)F, (T)L);
-	}
-
-	template <typename T, class Alloc>
-	template <class It>
-	void    vector<T, Alloc>::Insert(iterator P, It F, It L, input_iterator_tag) {
-		for (; F != L; ++P, ++F) {
-			P = insert(P, *F);
-		}
-	}
-
-	template <typename T, class Alloc>
-	template <class It>
-	void    vector<T, Alloc>::Insert(iterator P, It F, It L, forward_iterator_tag)
-	{
-		size_type	M = 0;
-		Distance(F, L, M);
-		size_type	N = capacity();
-		if (M == 0)
-		{
-			;
-		}
-		else if (max_size() - size() < M)
-		{
-			Xlen();
-		}
-		else if (size() + M > N)
-		{
-			N = max_size() - N / 2 < N ? 0 : N / 2;
-			if (N < size() + M)
-				N = size() + M;
-			pointer new_first = Mybase::Alval.allocate(N,  NULL);
-			pointer new_last;
-			try
-			{
-				new_last = Ucopy(begin(), P, new_first);
-				new_last = Ucopy(F, L, new_last);
-				Ucopy(P, end(), new_last);
-			}
-			catch (...)
-			{
-				Destroy(new_first, new_last);
-				Mybase::Alval.deallocate(new_first, N);
-				throw;
-			}
-			if (First)
-			{
-				Destroy(First, Last);
-				Mybase::Alval.deallocate(First, End - First);
-			}
-			End = new_first + N;
-			Last = new_first + size() + M;
-			First = new_first;
-		}
-		else if (M > (size_type)(end() - P))
-		{
-			Ucopy(P, end(), P.base() + M);
-			It Mid = F;
-			advance(Mid, end() - P);
-			try
-			{
-				Ucopy(Mid, L, Last);
-			}
-			catch (...)
-			{
-				Destroy(P.base() + M, Last + M);
-				throw;
-			}
-			Last += M;
-			std::copy(F, Mid, P);
-		}
-		else if (M > 0)
-		{
-			iterator end = this->end();
-			Last = Ucopy(end, end - M, Last);
-			std::copy_backward(P, end - M, end);
-			std::copy(F, L, P);
-		}
+	void vector<T, Alloc>::assign(It F, It L) {
+		Assign(F, L, ft::Iter_cat(F));
 	}
 }
 
